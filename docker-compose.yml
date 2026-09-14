@@ -5,49 +5,33 @@ services:
     environment:
       POSTGRES_USER: sip
       POSTGRES_PASSWORD: sip_dev_password
-      POSTGRES_DB: sip
+      POSTGRES_DB: sip_development
     ports:
       - "5432:5432"
     volumes:
       - sip_postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U sip -d sip"]
+      test: ["CMD-SHELL", "pg_isready -U sip -d sip_development"]
       interval: 5s
       timeout: 5s
       retries: 5
+    restart: unless-stopped
 
-volumes:
-  sip_postgres_data:
-
-  sip-web:
+  web:
     build:
       context: .
       dockerfile: Dockerfile
     ports:
       - "3000:3000"
     environment:
-      RAILS_ENV: production
-      DATABASE_URL: postgres://sip:${SIP_DB_PASSWORD}@sip-postgres:5432/sip_production
+      RAILS_ENV: ${RAILS_ENV:-development}
+      DATABASE_URL: postgres://sip:${SIP_DB_PASSWORD:-sip_dev_password}@postgres:5432/sip_development
       SECRET_KEY_BASE: ${SECRET_KEY_BASE}
+      FORCE_SSL: "false"
     depends_on:
-      sip-postgres:
+      postgres:
         condition: service_healthy
     restart: unless-stopped
 
-  sip-postgres:
-    image: postgres:17
-    environment:
-      POSTGRES_USER: sip
-      POSTGRES_PASSWORD: ${SIP_DB_PASSWORD}
-      POSTGRES_DB: sip_production
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U sip"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-    restart: unless-stopped
-
 volumes:
-  postgres_data:
+  sip_postgres_data:
