@@ -55,3 +55,4 @@ gem "importmap-rails", "~> 2.2"
 gem "json", "~> 2.8"
 
 gem "tilt", "~> 2.9"
+gem 'rack-security-headers', '~> 0.5.0'
