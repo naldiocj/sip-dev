@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :process, class: 'Sip::Process' do
-    numero { "2024/001/SIC" }
+    sequence(:numero) { |n| "2024/%03d/SIC" % n }
     ano { 2024 }
     titulo { 'Processo de Teste' }
     resumo { 'Resumo do processo' }

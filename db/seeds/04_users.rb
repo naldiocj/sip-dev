@@ -7,6 +7,8 @@
 # Senhas geradas localmente — nunca armazenadas em código-fonte.
 
 def seed_users
+  admin_password = ENV.fetch('SIP_ADMIN_PASSWORD', 'Sic@2024Angola')
+
   # ── Director Geral (acesso institucional máximo) ──
   return if User.exists?(username: 'director')
 
@@ -19,8 +21,6 @@ def seed_users
   user = User.create!(
     email: 'director@sic.gov.ao',
     username: 'director',
-    password: ENV.fetch('SIP_ADMIN_PASSWORD', 'Sic@2024Angola'),
-    password_confirmation: ENV.fetch('SIP_ADMIN_PASSWORD', 'Sic@2024Angola'),
     first_name: 'Director',
     last_name: 'Geral',
     organization_id: root_org.id,
@@ -35,13 +35,12 @@ def seed_users
     started_at: Time.current
   )
 
-  Account.find_or_create_by!(login: 'director') do |account|
-    account.email = user.email
-    account.password_hash = BCrypt::Password.create(
-      ENV.fetch('SIP_ADMIN_PASSWORD', 'Sic@2024Angola'), cost: 4
-    )
-    account.verified_at = Time.current
+  account = Account.find_or_create_by!(login: 'director') do |a|
+    a.email = user.email
   end
+  
+  account.update!(password: admin_password, password_confirmation: admin_password)
+  account.update!(verified_at: Time.current)
 
   puts "  [OK] Admin criado: #{user.email}"
 end
