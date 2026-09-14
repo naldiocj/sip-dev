@@ -884,3 +884,77 @@
 [data-theme="dark"] *::after {
   transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
 }
+
+/* ============================================================
+   TOAST NOTIFICATIONS
+   ============================================================ */
+.fb-toast-container {
+  @apply fixed bottom-4 right-4 z-50 flex flex-col gap-2 max-w-sm;
+}
+
+.fb-toast {
+  @apply fb-card p-4 flex items-start gap-3 shadow-lg animate-slideUp;
+}
+
+.fb-toast-icon {
+  @apply w-5 h-5 flex-shrink-0 mt-0.5;
+}
+
+.fb-toast-close {
+  @apply ml-auto fb-btn-icon p-1 h-6 w-6;
+}
+
+.fb-toast-success {
+  @apply fb-toast border-l-4 border-green-500;
+}
+
+.fb-toast-error {
+  @apply fb-toast border-l-4 border-red-500;
+}
+
+.fb-toast-warning {
+  @apply fb-toast border-l-4 border-yellow-500;
+}
+
+.fb-toast-info {
+  @apply fb-toast border-l-4 border-blue-500;
+}
+
+.fb-toast-title {
+  @apply text-sm font-semibold text-slate-900;
+}
+
+.fb-toast-message {
+  @apply text-sm text-slate-600 mt-1;
+}
+
+/* Toast animation */
+@keyframes toastSlideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes toastSlideOut {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+.toast-enter {
+  animation: toastSlideIn 0.3s ease-out forwards;
+}
+
+.toast-exit {
+  animation: toastSlideOut 0.3s ease-in forwards;
+}
