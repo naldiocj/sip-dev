@@ -40,3 +40,24 @@ plugin :solid_queue if ENV["SOLID_QUEUE_IN_PUMA"]
 # Specify the PID file. Defaults to tmp/pids/server.pid in development.
 # In other environments, only set the PID file if requested.
 pidfile ENV["PIDFILE"] if ENV["PIDFILE"]
+
+# Development: accept SSL connections with self-signed certificate.
+# When DEV_SSL=true, Puma listens on HTTPS only (no HTTP fallback).
+# This resolves "SSL connection to non-SSL Puma" errors from browsers
+# with HSTS cache or tools that expect HTTPS.
+# Access via: https://localhost:3000 (accept self-signed cert warning)
+if ENV["DEV_SSL"] == "true"
+  ssl_path = File.join(__dir__, "..", "storage", "ssl")
+  cert_file = File.join(ssl_path, "server.crt")
+  key_file = File.join(ssl_path, "server.key")
+
+  if File.exist?(cert_file) && File.exist?(key_file)
+    # Clear the default HTTP bind when SSL is enabled
+    clear_binds!
+    ssl_bind "0.0.0.0", ENV.fetch("PORT", 3000), {
+      key: key_file,
+      cert: cert_file,
+      verify_mode: "none"
+    }
+  end
+end

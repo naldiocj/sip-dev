@@ -141,6 +141,8 @@ GEM
       factory_bot (~> 6.5)
       railties (>= 6.1.0)
     ffi (1.17.4-x86_64-linux-gnu)
+    foreman (0.90.0)
+      thor (~> 1.4)
     fugit (1.13.0)
       et-orbi (~> 1.4)
       raabro (~> 1.4)
@@ -442,6 +444,7 @@ DEPENDENCIES
   devise (~> 5.0)
   docx (~> 0.13)
   factory_bot_rails (~> 6.4)
+  foreman
   image_processing (~> 1.2)
   importmap-rails (~> 2.2)
   jbuilder
