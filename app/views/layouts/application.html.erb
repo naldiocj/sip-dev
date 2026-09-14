@@ -2,7 +2,7 @@
 <html lang="<%= I18n.locale %>" class="h-full bg-slate-50">
   <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="turbo-refresh-style" content="morph">
     <meta name="csrf-token" content="<%= form_authenticity_token %>">
     <title><%= content_for(:title) || "SIP — Serviço de Investigação Criminal" %></title>
@@ -18,14 +18,17 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
     <script>
-      // Sidebar toggle state
-      if (localStorage.getItem('sidebar-collapsed') === 'true') {
-        document.documentElement.classList.add('sidebar-collapsed');
+      // Mobile sidebar state
+      if (localStorage.getItem('sidebar-mobile-open') === 'true') {
+        document.getElementById('sidebar')?.classList.add('mobile-open');
       }
     </script>
   </head>
   <body class="h-full bg-slate-50">
     <% if logged_in? %>
+      <!-- Mobile Overlay -->
+      <div id="mobile-overlay" class="mobile-overlay hidden" onclick="toggleSidebar()"></div>
+
       <div class="flex h-screen overflow-hidden">
         <!-- Sidebar -->
         <aside class="sidebar sidebar-scrollbar overflow-y-auto" id="sidebar">
@@ -171,7 +174,13 @@
           <!-- Topbar -->
           <header class="topbar">
             <div class="flex items-center justify-between">
-              <div class="topbar-left">
+              <div class="topbar-left flex items-center gap-3">
+                <!-- Mobile Menu Button -->
+                <button type="button" class="mobile-menu-btn fb-btn-icon lg:hidden" onclick="toggleSidebar()" aria-label="Menu">
+                  <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                  </svg>
+                </button>
                 <h1 class="topbar-title"><%= yield(:page_title) || "Dashboard" %></h1>
               </div>
               <div class="topbar-right">
@@ -196,7 +205,7 @@
 
           <!-- Flash Messages -->
           <% if flash.any? %>
-            <div class="bg-white border-b border-slate-200 px-6 py-3">
+            <div class="bg-white border-b border-slate-200 px-4 py-2 lg:px-6">
               <% flash.each do |type, message| %>
                 <div class="<%= flash_class(type) %> flex items-center gap-2">
                   <% if type == 'notice' %>
@@ -226,5 +235,32 @@
         <%= yield %>
       </div>
     <% end %>
+
+    <script>
+      function toggleSidebar() {
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('mobile-overlay');
+        
+        if (sidebar) {
+          sidebar.classList.toggle('mobile-open');
+        }
+        if (overlay) {
+          overlay.classList.toggle('hidden');
+        }
+        
+        localStorage.setItem('sidebar-mobile-open', sidebar?.classList.contains('mobile-open') || false);
+      }
+
+      // Close sidebar on escape
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+          const sidebar = document.getElementById('sidebar');
+          const overlay = document.getElementById('mobile-overlay');
+          if (sidebar && sidebar.classList.contains('mobile-open')) {
+            toggleSidebar();
+          }
+        }
+      });
+    </script>
   </body>
 </html>

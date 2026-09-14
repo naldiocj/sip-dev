@@ -720,3 +720,47 @@
     background-color: #cbd5e1;
   }
 }
+
+/* ============================================================
+   MOBILE RESPONSIVE OVERRIDES
+   ============================================================ */
+@media (max-width: 1023px) {
+  .sidebar {
+    @apply -translate-x-full;
+  }
+
+  .sidebar.mobile-open {
+    @apply translate-x-0;
+  }
+
+  .main-content {
+    @apply ml-0;
+  }
+
+  .mobile-overlay {
+    @apply fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-20;
+    animation: fadeIn 0.2s ease-out;
+  }
+}
+
+@media (min-width: 1024px) {
+  .mobile-menu-btn {
+    @apply hidden;
+  }
+}
+
+/* Mobile card adjustments */
+@media (max-width: 640px) {
+  .fb-card-body {
+    @apply px-4 py-3;
+  }
+
+  .fb-table th,
+  .fb-table td {
+    @apply px-3 py-2;
+  }
+
+  .page-content {
+    @apply p-4;
+  }
+}
