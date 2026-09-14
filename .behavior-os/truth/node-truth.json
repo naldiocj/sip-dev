@@ -1,0 +1,16 @@
+{
+  "tech": "node",
+  "installed": "24",
+  "sources": [
+    "https://nodejs.org/docs/latest/api/",
+    "https://endoflife.date/node"
+  ],
+  "verifiedAt": "2026-09-14T18:04:59.115Z",
+  "verification": {
+    "compatible": true,
+    "notes": [],
+    "warnings": []
+  },
+  "decision": "ALLOW",
+  "rule": "No Unverified Implementation — all APIs must be verified against official docs"
+}

@@ -1,0 +1,54 @@
+{
+  "missionId": "task-1789421303741",
+  "phase": "discovery",
+  "status": "running",
+  "risk": "R2",
+  "agent": "orchestrator",
+  "dna": "orchestrator",
+  "stack": [
+    "node"
+  ],
+  "versions": {
+    "node": "v24.3.0"
+  },
+  "discoveryComplete": true,
+  "truthComplete": true,
+  "versionPolicy": {
+    "channel": "lts",
+    "allow_current": false,
+    "allow_prerelease": false,
+    "allow_eol": false
+  },
+  "versionIssues": [],
+  "versionDetails": [
+    {
+      "tech": "node",
+      "version": "v24.3.0",
+      "cycle": "24",
+      "lts": "2025-10-28",
+      "eol": "2028-04-30"
+    }
+  ],
+  "gates": [
+    {
+      "name": "DiscoveryGate",
+      "result": "PASS",
+      "timestamp": "2026-09-14T21:28:23.741Z"
+    },
+    {
+      "name": "VersionGate",
+      "result": "PASS",
+      "details": [],
+      "timestamp": "2026-09-14T21:28:23.741Z"
+    }
+  ],
+  "createdAt": "2026-09-14T21:28:23.741Z",
+  "updatedAt": "2026-09-14T21:28:23.741Z",
+  "history": [
+    {
+      "from": "idle",
+      "to": "discovery",
+      "at": "2026-09-14T21:28:23.741Z"
+    }
+  ]
+}

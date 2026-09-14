@@ -1,0 +1,82 @@
+<%= form_with model: [:admin, @user], class: "space-y-4" do |f| %>
+  <% if @user.errors.any? %>
+    <div class="alert alert-error">
+      <ul class="list-disc list-inside">
+        <% @user.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="grid grid-cols-2 gap-4">
+    <div>
+      <%= f.label :first_name, class: "form-label" %>
+      <%= f.text_field :first_name, class: "form-input", placeholder: "Primeiro nome" %>
+    </div>
+    <div>
+      <%= f.label :last_name, class: "form-label" %>
+      <%= f.text_field :last_name, class: "form-input", placeholder: "Último nome" %>
+    </div>
+  </div>
+
+  <div>
+    <%= f.label :username, class: "form-label" %>
+    <%= f.text_field :username, class: "form-input", required: true, placeholder: "Nome de utilizador" %>
+  </div>
+
+  <div>
+    <%= f.label :email, class: "form-label" %>
+    <%= f.email_field :email, class: "form-input", required: true, placeholder: "email@sic.gov.ao" %>
+  </div>
+
+  <% unless @user.new_record? %>
+    <div>
+      <%= f.label :password, class: "form-label" %>
+      <%= f.password_field :password, class: "form-input", placeholder: "Deixe vazio para manter a actual" %>
+      <p class="text-xs text-gray-500 mt-1">Mínimo 8 caracteres</p>
+    </div>
+  <% else %>
+    <div>
+      <%= f.label :password, class: "form-label" %>
+      <%= f.password_field :password, class: "form-input", required: true, placeholder: "Palavra-passe" %>
+    </div>
+    <div>
+      <%= f.label :password_confirmation, class: "form-label" %>
+      <%= f.password_field :password_confirmation, class: "form-input", required: true, placeholder: "Confirmar palavra-passe" %>
+    </div>
+  <% end %>
+
+  <div class="grid grid-cols-2 gap-4">
+    <div>
+      <%= f.label :profile_id, class: "form-label" %>
+      <%= f.select :profile_id, 
+          options_for_select(@profiles.map { |p| [p.name, p.id] }, @user.assigned_profiles.first&.id),
+          { include_hidden: false },
+          { class: "form-select" }
+      %>
+    </div>
+    <div>
+      <%= f.label :organization_id, class: "form-label" %>
+      <%= f.select :organization_id, 
+          options_for_select(@organizations.map { |o| ["#{o.short_name} - #{o.name}", o.id] }, @user.organization&.id),
+          { include_hidden: false },
+          { class: "form-select" }
+      %>
+    </div>
+  </div>
+
+  <div>
+    <%= f.label :status, class: "form-label" %>
+    <%= f.select :status, 
+        options_for_select([["Activo", "active"], ["Inactivo", "inactive"], ["Suspenso", "suspended"]], @user.status),
+        { include_hidden: false },
+        { class: "form-select" }
+    %>
+  </div>
+
+  <div class="flex items-center gap-3 pt-4">
+    <%= f.submit class: "btn btn-primary" %>
+    <%= link_to "Cancelar", request.referer || admin_users_path, class: "btn btn-secondary" %>
+  </div>
+<% end %>

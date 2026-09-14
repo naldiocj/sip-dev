@@ -1,0 +1,15 @@
+{
+  "tech": "pundit",
+  "installed": "2.3",
+  "sources": [
+    "https://pundit.com/docs"
+  ],
+  "verifiedAt": "2026-09-14T19:07:20.893Z",
+  "verification": {
+    "compatible": true,
+    "notes": [],
+    "warnings": []
+  },
+  "decision": "ALLOW",
+  "rule": "No Unverified Implementation — all APIs must be verified against official docs"
+}

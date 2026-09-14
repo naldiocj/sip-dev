@@ -1,0 +1,64 @@
+<%= form_with(model: [:admin, @diligence], local: true) do |f| %>
+  <% if @diligence.errors.any? %>
+    <div class="alert alert-error mb-6">
+      <h3 class="font-semibold">Existem <%= @diligence.errors.count %> erros:</h3>
+      <ul class="list-disc list-inside mt-2">
+        <% @diligence.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="fb-card mb-6">
+    <div class="fb-card-header">
+      <h3 class="font-semibold text-gray-900">Informações da Diligência</h3>
+    </div>
+    <div class="fb-card-body space-y-4">
+      <div>
+        <%= f.label :diligencia_type_id, "Tipo de Diligência", class: "label" %>
+        <%= f.collection_select :diligencia_type_id, @types, :id, :name, { prompt: "Seleccionar..." }, { class: "select" } %>
+      </div>
+
+      <div>
+        <%= f.label :descricao, "Descrição", class: "label" %>
+        <%= f.text_area :descricao, rows: 4, class: "textarea", required: true, placeholder: "Descreva a diligência a realizar" %>
+      </div>
+
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <%= f.label :estado, "Estado", class: "label" %>
+          <%= f.select :estado,
+                { "Agendada" => "agendada", "Em Andamento" => "em_andamento", "Concluída" => "concluida", "Cancelada" => "cancelada" },
+                { selected: @diligence.estado.presence || "agendada" },
+                { class: "select" } %>
+        </div>
+        <div>
+          <%= f.label :sip_process_id, "Processo (opcional)", class: "label" %>
+          <%= f.collection_select :sip_process_id, @processes, :id, -> { |p| "#{p.numero}/#{p.ano} — #{p.titulo}" }, { include_hidden: true }, { class: "select" } %>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <%= f.label :responsavel_id, "Responsável", class: "label" %>
+          <%= f.collection_select :responsavel_id, @responsables, :id, -> { |u| "#{u.first_name} #{u.last_name}" }, { prompt: "Seleccionar..." }, { class: "select" } %>
+        </div>
+        <div>
+          <%= f.label :data_prevista, "Data Prevista", class: "label" %>
+          <%= f.date_field :data_prevista, value: @diligence.data_prevista, class: "input" %>
+        </div>
+      </div>
+
+      <div>
+        <%= f.label :data_real, "Data Real", class: "label" %>
+        <%= f.date_field :data_real, value: @diligence.data_real, class: "input" %>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex items-center justify-end gap-3">
+    <%= link_to "Cancelar", admin_diligences_path, class: "btn btn-secondary" %>
+    <%= f.submit @diligence.new_record? ? "Criar Diligência" : "Guardar Alterações", class: "btn btn-primary" %>
+  </div>
+<% end %>

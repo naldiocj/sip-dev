@@ -1,0 +1,15 @@
+{
+  "tech": "ruby",
+  "installed": "3.4",
+  "sources": [
+    "https://ruby.com/docs"
+  ],
+  "verifiedAt": "2026-09-14T18:47:39.638Z",
+  "verification": {
+    "compatible": true,
+    "notes": [],
+    "warnings": []
+  },
+  "decision": "ALLOW",
+  "rule": "No Unverified Implementation — all APIs must be verified against official docs"
+}

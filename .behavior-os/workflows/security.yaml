@@ -1,0 +1,48 @@
+# Workflow: Security Audit
+# Uso: Auditoria de segurança em funcionalidade
+name: security
+displayName: Auditoria de Segurança
+description: Workflow para auditoria completa de segurança
+
+risk_threshold: R4
+required_gates:
+  - DiscoveryGate
+  - TruthGate
+  - SecurityGate
+  - AntiPatternGate
+
+steps:
+  - id: discover
+    tool: bos_discover
+    description: "Identificar superfície de ataque"
+    required: true
+    
+  - id: scan_dependencies
+    tool: bash
+    description: "Auditar dependências"
+    required: true
+    command: "npm audit || bun audit"
+    
+  - id: scan_secrets
+    tool: bash
+    description: "Buscar secrets hardcoded"
+    required: true
+    command: "grep -r 'password\\|secret\\|api_key' --include='*.ts' --exclude-dir=node_modules"
+    
+  - id: scan_patterns
+    tool: bos_validate
+    description: "Verificar anti-patterns"
+    required: true
+    
+  - id: report
+    tool: question
+    description: "Gerar relatório de vulnerabilidades"
+    required: true
+
+templates:
+  report: ".behavior-os/evidence/security-report-{{date}}.md"
+
+outputs:
+  - vulnerabilities_found
+  - severity_distribution
+  - remediation_plan

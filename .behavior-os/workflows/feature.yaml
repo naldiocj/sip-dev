@@ -1,0 +1,67 @@
+# Workflow: Feature Implementation
+# Uso: Implementar nova feature no projeto
+name: feature
+displayName: Implementar Feature
+description: Workflow completo para implementação de features com governança
+
+risk_threshold: R3
+required_gates:
+  - DiscoveryGate
+  - TruthGate
+  - VersionGate
+  - TypeGate
+  - LintGate
+  - TestGate
+  - EvidenceGate
+
+steps:
+  - id: discover
+    tool: bos_discover
+    description: "Descobrir contexto do projeto"
+    required: true
+    
+  - id: truth
+    tool: bos_truth
+    description: "Verificar versões e APIs oficiais"
+    required: true
+    inputs:
+      tech: "{{stack}}"
+      
+  - id: knowledge
+    tool: bos_knowledge
+    description: "Criar knowledge pack"
+    required: true
+    inputs:
+      taskId: "{{date}}-{{feature-name}}"
+      
+  - id: plan
+    tool: question
+    description: "Confirmar plano com usuário"
+    required: true
+    
+  - id: execute
+    tool: null
+    description: "Implementar feature"
+    agent: backend
+    
+  - id: validate
+    tool: bos_validate
+    description: "Validar gates"
+    required: true
+    
+  - id: evidence
+    tool: bos_evidence
+    description: "Registrar evidência"
+    required: true
+
+templates:
+  dto: "src/{{module}}/dto/create-{{entity}}.dto.ts"
+  service: "src/{{module}}/{{entity}}.service.ts"
+  controller: "src/{{module}}/{{entity}}.controller.ts"
+  module: "src/{{module}}/{{entity}}.module.ts"
+  test: "src/{{module}}/{{entity}}.spec.ts"
+
+example:
+  feature: "user-auth"
+  entity: "User"
+  module: "auth"

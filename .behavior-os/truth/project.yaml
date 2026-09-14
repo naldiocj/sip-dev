@@ -1,0 +1,20 @@
+project:
+  name: sip
+  detectedAt: 2026-09-14T21:28:23.740Z
+
+stack: ["node"]
+versions: {
+  "node": "v24.3.0"
+}
+versionPolicy:
+  channel: lts
+  issues: []
+verifiedVersions: [
+  {
+    "tech": "node",
+    "version": "v24.3.0",
+    "cycle": "24",
+    "lts": "2025-10-28",
+    "eol": "2028-04-30"
+  }
+]

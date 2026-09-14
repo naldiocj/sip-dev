@@ -1,0 +1,20 @@
+<% content_for :page_title, "Nova Evidência" %>
+
+<div class="max-w-3xl">
+  <nav class="flex items-center gap-2 text-sm text-gray-500 mb-6">
+    <%= link_to "Evidências", admin_evidences_path, class: "hover:text-gray-900" %>
+    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+    </svg>
+    <span class="text-gray-900">Nova Evidência</span>
+  </nav>
+
+  <div class="card">
+    <div class="card-header">
+      <h3 class="font-semibold text-gray-900">Criar Nova Evidência</h3>
+    </div>
+    <div class="card-body">
+      <%= render "form" %>
+    </div>
+  </div>
+</div>

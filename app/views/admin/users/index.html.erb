@@ -1,0 +1,161 @@
+<% content_for :page_title, "Utilizadores" %>
+
+<div class="flex items-center justify-between mb-6">
+  <div>
+    <h1 class="text-2xl font-bold text-gray-900">Utilizadores</h1>
+    <p class="text-sm text-gray-500 mt-1"><%= @users.count %> registados</p>
+  </div>
+  <%= link_to new_admin_user_path, class: "btn btn-primary", data: { turbo_frame: "_top" } do %>
+    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+    </svg>
+    Novo Utilizador
+  <% end %>
+</div>
+
+<!-- Filters -->
+<div class="fb-card mb-6">
+  <div class="fb-card-body">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div>
+        <label class="fb-label">Perfil</label>
+        <select id="filter-profile" class="fb-select" onchange="filterUsers()">
+          <option value="">Todos os perfis</option>
+          <% @profiles.each do |p| %>
+            <option value="<%= p.code %>"><%= p.name %></option>
+          <% end %>
+        </select>
+      </div>
+      <div>
+        <label class="fb-label">Organização</label>
+        <select id="filter-org" class="fb-select" onchange="filterUsers()">
+          <option value="">Todas as organizações</option>
+          <% @organizations.each do |org| %>
+            <option value="<%= org.id %>"><%= org.short_name %> - <%= org.name %></option>
+          <% end %>
+        </select>
+      </div>
+      <div>
+        <label class="fb-label">Estado</label>
+        <select id="filter-status" class="fb-select" onchange="filterUsers()">
+          <option value="">Todos</option>
+          <option value="active">Activo</option>
+          <option value="inactive">Inactivo</option>
+          <option value="suspended">Suspenso</option>
+        </select>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Users Table -->
+<div class="fb-card">
+  <div class="fb-card-header flex items-center justify-between">
+    <h3 class="font-semibold text-gray-900">Lista de Utilizadores</h3>
+    <span class="fb-badge fb-badge fb-badge-blue"><%= @users.count %></span>
+  </div>
+  <div class="overflow-x-auto">
+    <table class="fb-table">
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>Email</th>
+          <th>Perfil</th>
+          <th>Organização</th>
+          <th>Estado</th>
+          <th>Criado em</th>
+          <th class="text-right">Acções</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-gray-100">
+        <% @users.each do |user| %>
+          <tr class="hover:bg-gray-50">
+            <td>
+              <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center text-sm font-medium text-gray-600">
+                  <%= user.first_name&.first || user.username&.first || "?" %>
+                </div>
+                <div>
+                  <p class="font-medium text-gray-900"><%= user.first_name %> <%= user.last_name %></p>
+                  <p class="text-xs text-gray-500">@<%= user.username %></p>
+                </div>
+              </div>
+            </td>
+            <td>
+              <p class="text-sm text-gray-900"><%= user.email %></p>
+            </td>
+            <td>
+              <% user.assigned_profiles.each do |profile| %>
+                <span class="fb-badge badge-<%= case profile.code
+                  when 'ADMIN' then 'purple'
+                  when 'DIRECAO_GERAL' then 'blue'
+                  when 'INSTRUTOR' then 'green'
+                  when 'PIQUETE' then 'red'
+                  else 'gray'
+                end %>"><%= profile.code %></span>
+              <% end %>
+            </td>
+            <td>
+              <% user.organizations.each do |org| %>
+                <p class="text-sm text-gray-600"><%= org.short_name %></p>
+              <% end %>
+            </td>
+            <td>
+              <span class="fb-badge fb-badge-<%= user.status == 'active' ? 'green' : user.status == 'inactive' ? 'gray' : 'red' %>">
+                <%= user.status.humanize %>
+              </span>
+            </td>
+            <td>
+              <p class="text-sm text-gray-500"><%= user.created_at.strftime("%d/%m/%Y") %></p>
+            </td>
+            <td class="text-right">
+              <div class="flex items-center justify-end gap-2">
+                <%= link_to admin_user_path(user), class: "text-gray-400 hover:text-gray-600", title: "Ver" do %>
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                  </svg>
+                <% end %>
+                <%= link_to edit_admin_user_path(user), class: "text-gray-400 hover:text-blue-600", title: "Editar", data: { turbo_frame: "_top" } do %>
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                  </svg>
+                <% end %>
+                <% if user.status != 'active' %>
+                  <%= link_to activate_admin_user_path(user), method: :post, class: "text-gray-400 hover:text-green-600", title: "Activar" do %>
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                  <% end %>
+                <% end %>
+                <% if user.status == 'active' %>
+                  <%= link_to deactivate_admin_user_path(user), method: :post, class: "text-gray-400 hover:text-yellow-600", title: "Desactivar" do %>
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                  <% end %>
+                <% end %>
+                <%= link_to admin_user_path(user), method: :delete, data: { turbo_confirm: "Tem certeza que deseja eliminar #{user.first_name} #{user.last_name}?" }, class: "text-gray-400 hover:text-red-600", title: "Eliminar" do %>
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                  </svg>
+                <% end %>
+              </div>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+  function filterUsers() {
+    const profile = document.getElementById('filter-profile').value;
+    const org = document.getElementById('filter-org').value;
+    const status = document.getElementById('filter-status').value;
+    
+    // In a real app, this would trigger a Turbo frame reload or fetch request
+    console.log('Filter:', { profile, org, status });
+  }
+</script>

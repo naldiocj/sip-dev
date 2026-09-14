@@ -1,0 +1,58 @@
+# Workflow: Bug Fix
+# Uso: Corrigir bug em funcionalidade existente
+name: bugfix
+displayName: Corrigir Bug
+description: Workflow para correção de bugs com validação de regressão
+
+risk_threshold: R2
+required_gates:
+  - DiscoveryGate
+  - TypeGate
+  - LintGate
+  - TestGate
+  - EvidenceGate
+
+steps:
+  - id: discover
+    tool: bos_discover
+    description: "Entender contexto do bug"
+    required: true
+    inputs:
+      scope: "quick"
+      
+  - id: reproduce
+    tool: question
+    description: "Reproduzir o bug"
+    required: false
+    
+  - id: diagnose
+    tool: question
+    description: "Diagnosticar causa raiz"
+    required: true
+    
+  - id: fix
+    tool: null
+    description: "Implementar correção"
+    agent: backend
+    
+  - id: validate
+    tool: bos_validate
+    description: "Validar correção"
+    required: true
+    
+  - id: regression
+    tool: question
+    description: "Testar regressão"
+    required: true
+    
+  - id: evidence
+    tool: bos_evidence
+    description: "Registrar evidência"
+    required: true
+
+templates:
+  test: "test/{{module}}/{{bug-id}}.spec.ts"
+
+example:
+  bug_id: "AUTH-123"
+  module: "auth"

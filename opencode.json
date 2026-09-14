@@ -1,0 +1,153 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "model": "agnes/agnes-2.5-flash",
+  "plugin": [
+    "./.opencode/plugins/behavior-os.ts"
+  ],
+  "permission": {
+    "read": "allow",
+    "edit": "allow",
+    "glob": "allow",
+    "grep": "allow",
+    "webfetch": "allow",
+    "websearch": "allow",
+    "lsp": "allow",
+    "question": "allow",
+    "skill": "allow",
+    "todowrite": "allow",
+    "bash": {
+      "*": "ask",
+      "pnpm *": "allow",
+      "bun *": "allow",
+      "pnpm dlx *": "allow",
+      "pnpm exec *": "allow",
+      "pnpm --version": "allow",
+      "pnpm -v": "allow",
+      "node --version": "allow",
+      "node -v": "allow",
+      "node *": "ask",
+      "python *": "deny",
+      "python3 *": "deny",
+      "npx *": "ask",
+      "npm *": "ask",
+      "git status": "allow",
+      "git diff": "allow",
+      "git log": "allow",
+      "ls": "allow",
+      "cat": "allow",
+      "head": "allow",
+      "tail": "allow"
+    },
+    "task": {
+      "*": "deny",
+      "orchestrator": "allow",
+      "enterprise": "allow",
+      "architect": "ask",
+      "backend": "ask",
+      "frontend": "ask",
+      "qa": "ask",
+      "governance": "deny"
+    },
+    "external_directory": "ask",
+    "doom_loop": "ask"
+  },
+  "agent": {
+    "orchestrator": {
+      "description": "Behavior OS Orchestrator — classifies, assesses, delegates, tracks evidence",
+      "mode": "primary",
+      "hidden": false,
+      "color": "#4ADE80",
+      "permission": {
+        "read": "allow",
+        "edit": "allow",
+        "write": "allow",
+        "bash": { "git push --force": "deny", "*": "ask" },
+        "task": { "*": "allow" }
+      }
+    },
+    "architect": {
+      "description": "Read-only architect for analysis and planning",
+      "mode": "subagent",
+      "hidden": false,
+      "color": "#60A5FA",
+      "permission": {
+        "read": "allow",
+        "edit": "deny",
+        "write": "deny",
+        "apply_patch": "deny",
+        "bash": { "*": "ask", "git log": "allow", "git diff": "allow", "grep": "allow", "cat": "allow" },
+        "task": { "*": "deny" }
+      }
+    },
+    "backend": {
+      "description": "Backend development agent",
+      "mode": "subagent",
+      "hidden": false,
+      "color": "#F472B6",
+      "permission": {
+        "read": "allow",
+        "edit": "allow",
+        "write": "allow",
+        "bash": { "git push": "ask", "git push --force": "deny", "*": "allow" },
+        "task": { "*": "deny" }
+      }
+    },
+    "frontend": {
+      "description": "Frontend development agent",
+      "mode": "subagent",
+      "hidden": false,
+      "color": "#FBBF24",
+      "permission": {
+        "read": "allow",
+        "edit": "allow",
+        "write": "allow",
+        "bash": { "git push": "ask", "git push --force": "deny", "*": "allow" },
+        "task": { "*": "deny" }
+      }
+    },
+    "qa": {
+      "description": "Quality assurance — tests only, no code edits",
+      "mode": "subagent",
+      "hidden": false,
+      "color": "#A78BFA",
+      "permission": {
+        "read": "allow",
+        "edit": "deny",
+        "write": "deny",
+        "apply_patch": "deny",
+        "bash": { "pnpm test": "allow", "pnpm exec *": "allow", "bun test": "allow", "*": "deny" },
+        "task": { "*": "deny" }
+      }
+    },
+    "governance": {
+      "description": "Governance and audit — read-only compliance checks",
+      "mode": "subagent",
+      "hidden": false,
+      "color": "#94A3B8",
+      "permission": {
+        "read": "allow",
+        "edit": "deny",
+        "write": "deny",
+        "apply_patch": "deny",
+        "bash": "deny",
+        "task": { "*": "deny" }
+      }
+    },
+    "enterprise": {
+      "description": "Enterprise orchestrator — skill-first, pnpm-first, monorepo-aware",
+      "mode": "primary",
+      "hidden": false,
+      "color": "#F97316",
+      "permission": {
+        "read": "allow",
+        "edit": "allow",
+        "write": "allow",
+        "bash": { "git push --force": "deny", "*": "ask" },
+        "task": { "*": "allow" }
+      }
+    }
+  },
+  "instructions": ["AGENTS.md", ".opencode/rules/*.md"],
+  "formatter": { "biome": { "enabled": true } },
+  "watcher": { "ignore": ["node_modules/**", "dist/**", ".git/**", ".opencode/plugins/**/*.ts", ".opencode/plugins/**/*.mjs"] }
+}

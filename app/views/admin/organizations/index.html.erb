@@ -1,0 +1,65 @@
+<% content_for :page_title, "Organizações" %>
+
+<div class="flex items-center justify-between mb-6">
+  <div>
+    <h1 class="text-2xl font-bold text-gray-900">Organizações</h1>
+    <p class="text-sm text-gray-500 mt-1">Estrutura hierárquica do SIC Angola</p>
+  </div>
+  <%= link_to new_admin_organization_path, class: "btn btn-primary", data: { turbo: false } do %>
+    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+    </svg>
+    Nova Organização
+  <% end %>
+</div>
+
+<!-- Tree View -->
+<div class="fb-card">
+  <div class="fb-card-header flex items-center justify-between">
+    <h3 class="font-semibold text-gray-900">Hierarquia Organizacional</h3>
+    <span class="fb-badge fb-badge fb-badge-blue"><%= @organizations.count %> unidades</span>
+  </div>
+  <div class="fb-card-body p-0">
+    <div class="tree">
+      <% render_tree(@organizations, nil, 0) %>
+    </div>
+  </div>
+</div>
+
+<%# View partial for tree rendering %>
+<% content_for :head do %>
+  <style>
+    .tree ul {
+      list-style: none;
+      padding-left: 24px;
+      margin: 0;
+    }
+    .tree > ul {
+      padding-left: 0;
+    }
+    .tree li {
+      position: relative;
+    }
+    .tree li::before {
+      content: '';
+      position: absolute;
+      left: -12px;
+      top: 16px;
+      width: 8px;
+      height: 2px;
+      background: #e5e7eb;
+    }
+    .tree li::after {
+      content: '';
+      position: absolute;
+      left: -12px;
+      top: 8px;
+      bottom: 8px;
+      width: 2px;
+      background: #e5e7eb;
+    }
+    .tree li:last-child::after {
+      bottom: 50%;
+    }
+  </style>
+<% end %>

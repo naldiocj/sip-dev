@@ -1,0 +1,15 @@
+{
+  "tech": "rodauth",
+  "installed": "2.47",
+  "sources": [
+    "https://rodauth.com/docs"
+  ],
+  "verifiedAt": "2026-09-14T18:39:05.600Z",
+  "verification": {
+    "compatible": true,
+    "notes": [],
+    "warnings": []
+  },
+  "decision": "ALLOW",
+  "rule": "No Unverified Implementation — all APIs must be verified against official docs"
+}

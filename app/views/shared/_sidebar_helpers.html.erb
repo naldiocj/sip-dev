@@ -1,0 +1,24 @@
+<%# Helper methods for sidebar %>
+<%
+def nav_link_class(controller_name = nil, action_name = nil)
+  current_controller = controller_name || params[:controller].gsub("admin/", "")
+  current_action = action_name || params[:action]
+  
+  if current_controller == params[:controller].gsub("admin/", "")
+    base = "nav-link"
+    base += " nav-link-active" if current_action == params[:action] || (params[:action] == "index" && current_controller == params[:controller].gsub("admin/", ""))
+    base
+  else
+    "nav-link"
+  end
+end
+
+def flash_class(type)
+  case type.to_s
+  when "notice" then "alert alert-success"
+  when "alert" then "alert alert-error"
+  when "warning" then "alert alert-warning"
+  else "alert alert-info"
+  end
+end
+%>

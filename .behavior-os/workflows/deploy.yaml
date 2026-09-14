@@ -1,0 +1,79 @@
+# Workflow: Deploy
+# Uso: Deploy para ambiente (staging/production)
+name: deploy
+displayName: Deploy
+description: Workflow para deploy seguro com validation gates
+
+risk_threshold: R4
+required_gates:
+  - DiscoveryGate
+  - TruthGate
+  - VersionGate
+  - TypeGate
+  - LintGate
+  - TestGate
+  - E2EGate
+  - SecurityGate
+  - EvidenceGate
+
+steps:
+  - id: pre_check
+    tool: bos_doctor
+    description: "Verificar saúde do sistema"
+    required: true
+    
+  - id: validate_all
+    tool: bos_validate
+    description: "Validar todos os gates"
+    required: true
+    inputs:
+      gates: ["type", "lint", "test", "e2e", "security"]
+      
+  - id: dry_run
+    tool: bash
+    description: "Teste de deploy (dry run)"
+    required: true
+    command: "npm run build && npm run test:e2e"
+    
+  - id: backup
+    tool: bash
+    description: "Backup do ambiente atual"
+    required: true
+    
+  - id: deploy_staging
+    tool: bash
+    description: "Deploy para staging"
+    required: false
+    command: "npm run deploy:staging"
+    
+  - id: smoke_test
+    tool: bash
+    description: "Testes de fumaça"
+    required: true
+    
+  - id: approve_production
+    tool: question
+    description: "Aprovação humana para production"
+    required: true
+    
+  - id: deploy_production
+    tool: bash
+    description: "Deploy para produção"
+    required: false
+    command: "npm run deploy:production"
+    
+  - id: monitor
+    tool: bash
+    description: "Monitorar métricas pós-deploy"
+    required: true
+    
+  - id: evidence
+    tool: bos_evidence
+    description: "Registrar evidência"
+    required: true
+
+safety:
+  require_human_approval: true
+  require_all_tests_pass: true
+  allow_rollback: true
+  rollback_timeout_minutes: 30

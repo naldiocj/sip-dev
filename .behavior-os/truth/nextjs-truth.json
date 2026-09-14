@@ -1,0 +1,15 @@
+{
+  "tech": "nextjs",
+  "installed": "16.3.4",
+  "sources": [
+    "https://nextjs.com/docs"
+  ],
+  "verifiedAt": "2026-09-10T22:49:54.659Z",
+  "verification": {
+    "compatible": true,
+    "notes": [],
+    "warnings": []
+  },
+  "decision": "ALLOW",
+  "rule": "No Unverified Implementation — all APIs must be verified against official docs"
+}

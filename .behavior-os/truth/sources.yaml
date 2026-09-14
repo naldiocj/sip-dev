@@ -1,0 +1,9 @@
+source_policy:
+  official_first: true
+sources:
+  node:
+    official:
+      - https://nodejs.org/docs/latest/api/
+  typescript:
+    official:
+      - https://www.typescriptlang.org/docs/

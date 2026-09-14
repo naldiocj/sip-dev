@@ -1,0 +1,70 @@
+<%= form_with(model: [:admin, @mandate], local: true) do |f| %>
+  <% if @mandate.errors.any? %>
+    <div class="alert alert-error mb-6">
+      <h3 class="font-semibold">Existem <%= @mandate.errors.count %> erros:</h3>
+      <ul class="list-disc list-inside mt-2">
+        <% @mandate.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="fb-card mb-6">
+    <div class="fb-card-header">
+      <h3 class="font-semibold text-gray-900">Informações do Mandado</h3>
+    </div>
+    <div class="fb-card-body space-y-4">
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <%= f.label :mandate_type, "Tipo de Mandado", class: "label" %>
+          <%= f.select :mandate_type, @mandate_types, { prompt: "Seleccionar..." }, { class: "select", required: true } %>
+        </div>
+        <div>
+          <%= f.label :destino, "Destino", class: "label" %>
+          <%= f.text_field :destino, class: "input", required: true, placeholder: "Entidade destinatória" %>
+        </div>
+      </div>
+
+      <div>
+        <%= f.label :descricao, "Descrição", class: "label" %>
+        <%= f.text_area :descricao, rows: 3, class: "textarea", required: true, placeholder: "Descreva o mandado" %>
+      </div>
+
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <%= f.label :process_id, "Processo (opcional)", class: "label" %>
+          <%= f.collection_select :process_id, @processes, :id, -> { |p| "#{p.numero}/#{p.ano} — #{p.titulo}" }, { include_hidden: true }, { class: "select" } %>
+        </div>
+        <div>
+          <%= f.label :estado, "Estado", class: "label" %>
+          <%= f.select :estado,
+                { "Emitido" => "emitido", "Em Andamento" => "em_andamento", "Executado" => "executado", "Cancelado" => "cancelado" },
+                { selected: @mandate.estado.presence || "emitido" },
+                { class: "select" } %>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <%= f.label :emissor_id, "Emissor", class: "label" %>
+          <%= f.collection_select :emissor_id, @emissores, :id, -> { |u| "#{u.first_name} #{u.last_name}" }, { prompt: "Seleccionar..." }, { class: "select" } %>
+        </div>
+        <div>
+          <%= f.label :data_emissao, "Data de Emissão", class: "label" %>
+          <%= f.date_field :data_emissao, value: @mandate.data_emissao || Time.current, class: "input", required: true %>
+        </div>
+      </div>
+
+      <div>
+        <%= f.label :data_prazo, "Data Prazo", class: "label" %>
+        <%= f.date_field :data_prazo, value: @mandate.data_prazo, class: "input", required: true %>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex items-center justify-end gap-3">
+    <%= link_to "Cancelar", admin_mandates_path, class: "btn btn-secondary" %>
+    <%= f.submit @mandate.new_record? ? "Criar Mandado" : "Guardar Alterações", class: "btn btn-primary" %>
+  </div>
+<% end %>

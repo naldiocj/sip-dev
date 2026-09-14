@@ -1,0 +1,18 @@
+{
+  "tech": "typescript",
+  "installed": "6.0.2",
+  "sources": [
+    "https://www.typescriptlang.org/docs/",
+    "https://www.typescriptlang.org/docs/handbook/release-notes/"
+  ],
+  "verifiedAt": "2026-09-10T22:49:56.529Z",
+  "verification": {
+    "compatible": true,
+    "notes": [
+      "TypeScript 5.x supports decorators and top-level await"
+    ],
+    "warnings": []
+  },
+  "decision": "ALLOW",
+  "rule": "No Unverified Implementation — all APIs must be verified against official docs"
+}

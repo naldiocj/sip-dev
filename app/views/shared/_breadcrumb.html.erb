@@ -1,0 +1,9 @@
+<% nav_text = yield(:nav_text) || 'Início' %>
+<nav class="fb-breadcrumb mb-6" aria-label="Breadcrumb">
+  <ol class="flex items-center gap-2 flex-wrap">
+    <li><a href="<%= admin_dashboard_path %>" class="fb-breadcrumb-link">Dashboard</a></li>
+    <li class="fb-breadcrumb-separator">/</li>
+    <li class="text-slate-700 font-medium"><%= nav_text %></li>
+  </ol>
+</nav>
+<% content_for :nav_text, nav_text %>

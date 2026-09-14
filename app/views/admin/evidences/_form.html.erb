@@ -1,0 +1,62 @@
+<%= form_with(model: [:admin, @evidence], local: true, multipart: true) do |f| %>
+  <% if @evidence.errors.any? %>
+    <div class="alert alert-error mb-6">
+      <h3 class="font-semibold">Existem <%= @evidence.errors.count %> erros:</h3>
+      <ul class="list-disc list-inside mt-2">
+        <% @evidence.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="card mb-6">
+    <div class="card-header">
+      <h3 class="font-semibold text-gray-900">Informações da Evidência</h3>
+    </div>
+    <div class="card-body space-y-4">
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <%= f.label :evidence_type, "Tipo de Evidência", class: "label" %>
+          <%= f.select :evidence_type, @evidence_types, { prompt: "Seleccionar..." }, { class: "select", required: true } %>
+        </div>
+        <div>
+          <%= f.label :collected_at, "Data de Coleta", class: "label" %>
+          <%= f.datetime_local_field :collected_at, value: @evidence.collected_at, class: "input" %>
+        </div>
+      </div>
+
+      <div>
+        <%= f.label :descricao, "Descrição", class: "label" %>
+        <%= f.text_area :descricao, rows: 3, class: "textarea", required: true, placeholder: "Descreva a evidência coletada" %>
+      </div>
+
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <%= f.label :process_id, "Processo (opcional)", class: "label" %>
+          <%= f.collection_select :process_id, @processes, :id, -> { |p| "#{p.numero}/#{p.ano} — #{p.titulo}" }, { include_hidden: true }, { class: "select" } %>
+        </div>
+        <div>
+          <%= f.label :collector_id, "Coletor", class: "label" %>
+          <%= f.collection_select :collector_id, @collectors, :id, -> { |u| "#{u.first_name} #{u.last_name}" }, { prompt: "Seleccionar..." }, { class: "select" } %>
+        </div>
+      </div>
+
+      <div>
+        <%= f.label :file, "Ficheiro (opcional)", class: "label" %>
+        <%= f.file_field :file, class: "file-input" %>
+        <% if @evidence.file.attached? %>
+          <p class="text-xs text-gray-500 mt-1">
+            Ficheiro actual: <%= @evidence.file.filename %>
+            <%= link_to "Remover", "#", class: "text-red-600 hover:text-red-700", data: { turbo: false } %>
+          </p>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex items-center justify-end gap-3">
+    <%= link_to "Cancelar", admin_evidences_path, class: "btn btn-secondary" %>
+    <%= f.submit @evidence.new_record? ? "Criar Evidência" : "Guardar Alterações", class: "btn btn-primary" %>
+  </div>
+<% end %>

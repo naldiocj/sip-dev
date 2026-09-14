@@ -1,0 +1,37 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  host: <%= ENV.fetch("DB_HOST") { "localhost" } %>
+  port: <%= ENV.fetch("DB_PORT") { "5432" } %>
+
+development:
+  <<: *default
+  database: sip_development
+  username: sip
+  password: <%= ENV["SIP_DB_PASSWORD"] || "sip_dev_password" %>
+
+test:
+  <<: *default
+  database: sip_test
+  username: sip
+  password: <%= ENV["SIP_DB_PASSWORD"] || "sip_dev_password" %>
+
+production:
+  primary: &primary_production
+    <<: *default
+    database: sip_production
+    username: <%= ENV["SIP_DB_USER"] %>
+    password: <%= ENV["SIP_DB_PASSWORD"] %>
+  cache:
+    <<: *primary_production
+    database: sip_production_cache
+    migrations_paths: db/cache_migrate
+  queue:
+    <<: *primary_production
+    database: sip_production_queue
+    migrations_paths: db/queue_migrate
+  cable:
+    <<: *primary_production
+    database: sip_production_cable
+    migrations_paths: db/cable_migrate

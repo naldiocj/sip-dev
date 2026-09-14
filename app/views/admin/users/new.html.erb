@@ -1,0 +1,22 @@
+<% content_for :page_title, "Novo Utilizador" %>
+
+<div class="max-w-2xl">
+  <div class="mb-6">
+    <%= link_to admin_users_path, class: "text-sm text-gray-600 hover:text-gray-900 flex items-center gap-1" do %>
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+      </svg>
+      Voltar
+    <% end %>
+  </div>
+
+  <div class="fb-card">
+    <div class="fb-card-header">
+      <h2 class="font-semibold text-gray-900">Criar Utilizador</h2>
+      <p class="text-sm text-gray-500 mt-1">Preencha os dados do novo utilizador</p>
+    </div>
+    <div class="fb-card-body">
+      <%= render "form", user: @user %>
+    </div>
+  </div>
+</div>

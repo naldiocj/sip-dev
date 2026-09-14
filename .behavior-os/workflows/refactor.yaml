@@ -1,0 +1,63 @@
+# Workflow: Refactor
+# Uso: Refatorar código existente sem mudar comportamento
+name: refactor
+displayName: Refatorar Código
+description: Workflow para refatoração segura com preservação de behavior
+
+risk_threshold: R3
+required_gates:
+  - DiscoveryGate
+  - TruthGate
+  - ArchitectureGate
+  - TypeGate
+  - LintGate
+  - TestGate
+  - EvidenceGate
+
+steps:
+  - id: discover
+    tool: bos_discover
+    description: "Mapear código a refatorar"
+    required: true
+    
+  - id: analyze
+    tool: question
+    description: "Analisar dependências"
+    required: true
+    
+  - id: plan
+    tool: question
+    description: "Planejar refatoração"
+    required: true
+    
+  - id: backup
+    tool: bash
+    description: "Criar backup (git commit)"
+    required: true
+    command: "git add -A && git commit -m 'refactor: backup before changes'"
+    
+  - id: execute
+    tool: null
+    description: "Implementar refatoração"
+    agent: backend
+    
+  - id: validate
+    tool: bos_validate
+    description: "Validar gates"
+    required: true
+    
+  - id: test
+    tool: bash
+    description: "Rodar testes"
+    required: true
+    command: "bun test"
+    
+  - id: evidence
+    tool: bos_evidence
+    description: "Registrar evidência"
+    required: true
+
+safety:
+  require_backup: true
+  require_all_tests_pass: true
+  allow_partial_commit: false

@@ -1,0 +1,20 @@
+services:
+  postgres:
+    image: postgres:17-alpine
+    container_name: sip-postgres
+    environment:
+      POSTGRES_USER: sip
+      POSTGRES_PASSWORD: sip_dev_password
+      POSTGRES_DB: sip
+    ports:
+      - "5432:5432"
+    volumes:
+      - sip_postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U sip -d sip"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  sip_postgres_data:

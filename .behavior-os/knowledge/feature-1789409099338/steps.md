@@ -1,0 +1,7 @@
+- [ ] discover
+- [ ] truth
+- [ ] knowledge
+- [ ] plan
+- [ ] execute
+- [ ] validate
+- [ ] evidence

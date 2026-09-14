@@ -1,0 +1,103 @@
+<% content_for :page_title, @mandate.mandate_type %>
+
+<nav class="flex items-center gap-2 text-sm text-gray-500 mb-6">
+  <%= link_to "Mandados", admin_mandates_path, class: "hover:text-gray-900" %>
+  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+  </svg>
+  <span class="text-gray-900"><%= @mandate.destino %></span>
+</nav>
+
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+  <div class="lg:col-span-2 space-y-6">
+    <div class="fb-card">
+      <div class="fb-card-header flex items-start justify-between">
+        <div>
+          <div class="flex items-center gap-3 mb-2">
+            <%= estado_badge(@mandate.estado) %>
+            <span class="fb-badge fb-badge fb-badge-blue"><%= @mandate.mandate_type %></span>
+          </div>
+          <h1 class="text-2xl font-bold text-gray-900"><%= @mandate.destino %></h1>
+        </div>
+        <div class="flex items-center gap-2">
+          <%= link_to edit_admin_mandate_path(@mandate), class: "btn btn-secondary", data: { turbo: false } do %>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+            </svg>
+            Editar
+          <% end %>
+          <%= link_to admin_mandates_path, class: "btn btn-secondary", data: { turbo: false } do %>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+            </svg>
+            Voltar
+          <% end %>
+        </div>
+      </div>
+      <div class="fb-card-body">
+        <p class="text-gray-600"><%= @mandate.descricao %></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="space-y-6">
+    <div class="fb-card">
+      <div class="fb-card-header">
+        <h3 class="font-semibold text-gray-900">Informações</h3>
+      </div>
+      <div class="fb-card-body space-y-4">
+        <div>
+          <p class="text-xs text-gray-500 uppercase">Processo</p>
+          <% if @mandate.process.present? %>
+            <%= link_to @mandate.process.numero, admin_process_path(@mandate.process), class: "text-sm text-blue-600 hover:text-blue-700", data: { turbo: false } %>
+          <% else %>
+            <p class="text-sm text-gray-400">Não associado</p>
+          <% end %>
+        </div>
+        <div>
+          <p class="text-xs text-gray-500 uppercase">Emissor</p>
+          <p class="text-sm text-gray-900"><%= @mandate.emissor&.full_name || "—" %></p>
+        </div>
+        <div>
+          <p class="text-xs text-gray-500 uppercase">Data de Emissão</p>
+          <p class="text-sm text-gray-900"><%= @mandate.data_emissao&.strftime("%d/%m/%Y") || "—" %></p>
+        </div>
+        <div>
+          <p class="text-xs text-gray-500 uppercase">Data Prazo</p>
+          <p class="text-sm <%= @mandate.data_prazo.present? && @mandate.data_prazo.past? && @mandate.estado != 'executado' ? 'text-red-600 font-medium' : 'text-gray-900' %>">
+            <%= @mandate.data_prazo&.strftime("%d/%m/%Y") || "—" %>
+          </p>
+          <% if @mandate.data_prazo.present? && @mandate.data_prazo.past? && @mandate.estado != 'executado' && @mandate.estado != 'cancelado' %>
+            <span class="text-xs text-red-500">Vencido</span>
+          <% end %>
+        </div>
+        <div>
+          <p class="text-xs text-gray-500 uppercase">Criado em</p>
+          <p class="text-sm text-gray-900"><%= @mandate.created_at.strftime("%d/%m/%Y às %H:%M") %></p>
+        </div>
+      </div>
+    </div>
+
+    <% if @mandate.estado == 'emitido' || @mandate.estado == 'em_andamento' %>
+      <div class="fb-card">
+        <div class="fb-card-header">
+          <h3 class="font-semibold text-gray-900">Acções</h3>
+        </div>
+        <div class="fb-card-body space-y-2">
+          <%= link_to execute_admin_mandate_path(@mandate), method: :post, class: "btn btn-success w-full", data: { turbo: false } do %>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+            Executar Mandado
+          <% end %>
+          <%= link_to cancel_admin_mandate_path(@mandate), method: :post, class: "btn btn-danger w-full", data: { turbo: false } do %>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+            Cancelar Mandado
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
