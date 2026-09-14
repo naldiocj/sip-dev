@@ -18,3 +18,36 @@ services:
 
 volumes:
   sip_postgres_data:
+
+  sip-web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      RAILS_ENV: production
+      DATABASE_URL: postgres://sip:${SIP_DB_PASSWORD}@sip-postgres:5432/sip_production
+      SECRET_KEY_BASE: ${SECRET_KEY_BASE}
+    depends_on:
+      sip-postgres:
+        condition: service_healthy
+    restart: unless-stopped
+
+  sip-postgres:
+    image: postgres:17
+    environment:
+      POSTGRES_USER: sip
+      POSTGRES_PASSWORD: ${SIP_DB_PASSWORD}
+      POSTGRES_DB: sip_production
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U sip"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
