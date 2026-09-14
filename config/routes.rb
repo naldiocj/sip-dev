@@ -67,6 +67,10 @@ Rails.application.routes.draw do
 
     # Audit
     get "audit", to: "audit#index", as: :audit
+    get "reports/processes", to: "reports#processes"
+    get "reports/diligences", to: "reports#diligences"
+    get "reports/mandates", to: "reports#mandates"
+    get "reports/evidences", to: "reports#evidences"
 
     # Evidences
     resources :evidences, only: [ :index, :show ]

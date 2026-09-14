@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Relatório de Diligências</title>
+  <style>
+    body { font-family: Arial, sans-serif; font-size: 10px; }
+    h1 { font-size: 18px; text-align: center; }
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+    th, td { border: 1px solid #ddd; padding: 6px; text-align: left; }
+    th { background-color: #f3f4f6; font-weight: bold; }
+    .footer { margin-top: 30px; font-size: 8px; text-align: center; color: #666; }
+  </style>
+</head>
+<body>
+  <h1>Relatório de Diligências - SIC Angola</h1>
+  <p>Gerado em: <%= Time.current.strftime("%d/%m/%Y às %H:%M") %></p>
+  <p>Total: <%= @diligences.count %> diligências</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Tipo</th>
+        <th>Descrição</th>
+        <th>Estado</th>
+        <th>Responsável</th>
+        <th>Data Prevista</th>
+        <th>Data Real</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @diligences.each do |d| %>
+        <tr>
+          <td><%= d.diligencia_type&.name || "-" %></td>
+          <td><%= d.descricao %></td>
+          <td><%= d.estado %></td>
+          <td><%= d.responsavel&.full_name || "-" %></td>
+          <td><%= d.data_prevista&.strftime("%d/%m/%Y") %></td>
+          <td><%= d.data_real&.strftime("%d/%m/%Y") %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <div class="footer">
+    <p>SIP - Sistema de Ivory e Processos | Serviço de Investigação Criminal</p>
+  </div>
+</body>
+</html>

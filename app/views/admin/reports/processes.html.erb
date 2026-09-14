@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Relatório de Processos</title>
+  <style>
+    body { font-family: Arial, sans-serif; font-size: 10px; }
+    h1 { font-size: 18px; text-align: center; }
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+    th, td { border: 1px solid #ddd; padding: 6px; text-align: left; }
+    th { background-color: #f3f4f6; font-weight: bold; }
+    .footer { margin-top: 30px; font-size: 8px; text-align: center; color: #666; }
+  </style>
+</head>
+<body>
+  <h1>Relatório de Processos - SIC Angola</h1>
+  <p>Gerado em: <%= Time.current.strftime("%d/%m/%Y às %H:%M") %></p>
+  <p>Total: <%= @processes.count %> processos</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Número</th>
+        <th>Ano</th>
+        <th>Título</th>
+        <th>Estado</th>
+        <th>Organização</th>
+        <th>Responsável</th>
+        <th>Data Entrada</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @processes.each do |p| %>
+        <tr>
+          <td><%= p.numero %></td>
+          <td><%= p.ano %></td>
+          <td><%= p.titulo %></td>
+          <td><%= p.state_code %></td>
+          <td><%= p.organizacao&.name || "-" %></td>
+          <td><%= p.responsavel&.full_name || "-" %></td>
+          <td><%= p.data_entrada&.strftime("%d/%m/%Y") %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <div class="footer">
+    <p>SIP - Sistema de Ivory e Processos | Serviço de Investigação Criminal</p>
+  </div>
+</body>
+</html>
