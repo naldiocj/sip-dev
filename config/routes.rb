@@ -9,8 +9,10 @@ Rails.application.routes.draw do
       confirmations: "confirmations"
     }
 
-  # Root → login page
-  root "sessions#new"
+  # Devise scope for root
+  devise_scope :account do
+    root to: "sessions#new"
+  end
 
   # Admin namespace
   namespace :admin do

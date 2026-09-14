@@ -14,10 +14,14 @@ module ApplicationHelper
 
   def flash_class(type)
     case type.to_s
-    when "notice" then "fb-alert fb-alert-success"
-    when "alert" then "fb-alert fb-alert-error"
-    when "warning" then "fb-alert fb-alert-warning"
-    else "fb-alert fb-alert-info"
+    when "notice"
+      'fb-alert fb-alert-success'
+    when "alert"
+      'fb-alert fb-alert-error'
+    when "warning"
+      'fb-alert fb-alert-warning'
+    else
+      'fb-alert fb-alert-info'
     end
   end
 
@@ -33,6 +37,7 @@ module ApplicationHelper
     session[:account_id].present?
   end
 
+  # State badges
   def state_badge(code)
     colors = {
       "REGISTADO" => "blue",
@@ -67,17 +72,10 @@ module ApplicationHelper
       "em_andamento" => "yellow",
       "concluida" => "green",
       "cancelada" => "gray",
-      "REGISTADO" => "blue",
-      "EM_DISTRIBUICAO" => "yellow",
-      "DISTRIBUIDO" => "green",
-      "EM_INSTRUCAO" => "green",
-      "DEVOLVIDO" => "red",
-      "PENDENTE" => "yellow",
-      "SUSPENSO" => "gray",
-      "CONCLUIDO" => "blue",
-      "ENCERRADO" => "gray",
-      "ARQUIVADO" => "purple",
-      "ANULADO" => "red"
+      "emitido" => "blue",
+      "em_andamento" => "yellow",
+      "executado" => "green",
+      "cancelado" => "gray"
     }
     color = colors[estado&.downcase]&.to_s || "gray"
     label = case estado
@@ -85,6 +83,9 @@ module ApplicationHelper
             when "em_andamento" then "Em Andamento"
             when "concluida" then "Concluída"
             when "cancelada" then "Cancelada"
+            when "emitido" then "Emitido"
+            when "executado" then "Executado"
+            when "cancelado" then "Cancelado"
             else estado.presence&.humanize || "—"
             end
     content_tag(:span, label, class: "fb-badge fb-badge-#{color}")
@@ -96,11 +97,7 @@ module ApplicationHelper
       "submitted" => "blue",
       "approved" => "green",
       "signed" => "purple",
-      "archived" => "gray",
-      "agendada" => "blue",
-      "em_andamento" => "yellow",
-      "concluida" => "green",
-      "cancelada" => "red"
+      "archived" => "gray"
     }
     color = colors[status&.downcase]&.to_s || "gray"
     label = case status
@@ -112,5 +109,47 @@ module ApplicationHelper
             else status.presence&.humanize || "—"
             end
     content_tag(:span, label, class: "fb-badge fb-badge-#{color}")
+  end
+
+  # Breadcrumb helper
+  def breadcrumb(items)
+    content_tag(:nav, class: "fb-breadcrumb mb-4") do
+      items.each_with_index.map do |item, index|
+        if index == items.length - 1
+          content_tag(:span, class: "fb-breadcrumb-current") { item[:text] }
+        else
+          [
+            link_to(item[:text], item[:url], class: "fb-breadcrumb-link"),
+            content_tag(:span, "›", class: "fb-breadcrumb-separator")
+          ].compact.join.html_safe
+        end
+      end.join.html_safe
+    end
+  end
+
+  # Empty state helper
+  def empty_state(title, description, action_text = nil, action_path = nil)
+    content_tag(:div, class: "fb-empty") do
+      concat(content_tag(:svg, class: "fb-empty-icon", fill: "none", stroke: "currentColor", viewBox: "0 0 24 24") do
+        concat(%Q{<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>})
+      end)
+      concat(content_tag(:p, title, class: "fb-empty-title"))
+      concat(content_tag(:p, description, class: "fb-empty-description")) if description
+      concat(content_tag(:div, class: "mt-4") do
+        link_to(action_text, action_path, class: "fb-btn fb-btn-primary") if action_text && action_path
+      end)
+    end
+  end
+
+  # Pagination helper with Flowbite styles
+  def pagination_links(paginated_collection)
+    return unless paginated_collection.total_pages > 1
+    
+    content_tag(:div, class: "flex items-center justify-between border-t border-slate-200 px-4 py-3") do
+      concat(content_tag(:p, class: "text-sm text-slate-700") do
+        "Mostrando #{paginated_collection.offset + 1} a #{[paginated_collection.offset + paginated_collection.limit, paginated_collection.total].min} de #{paginated_collection.total} resultados"
+      end)
+      concat paginate_links(paginated_collection)
+    end
   end
 end
