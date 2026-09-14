@@ -1,14 +1,11 @@
 {
   "name": "sip",
   "version": "1.0.0",
-  "description": "This README would normally document whatever steps are necessary to get the application up and running.",
-  "main": "index.js",
-  "directories": {
-    "doc": "docs",
-    "lib": "lib",
-    "test": "test"
-  },
+  "description": "Sistema de Ivory e Processos - SIC Angola",
   "scripts": {
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "test:e2e:headed": "playwright test --headed"
   },
   "keywords": [],
   "author": "",
@@ -16,10 +13,8 @@
   "type": "commonjs",
   "dependencies": {
     "flowbite": "^4.0.2"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.53.0"
   }
 }
-  "scripts": {
-    "test:e2e": "playwright test",
-    "test:e2e:ui": "playwright test --ui",
-    "test:e2e:headed": "playwright test --headed"
-  }
