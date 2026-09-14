@@ -1034,3 +1034,75 @@
   from { opacity: 0; }
   to { opacity: 1; }
 }
+
+/* ============================================================
+   SKELETON LOADERS
+   ============================================================ */
+.fb-skeleton {
+  @apply animate-pulse bg-slate-200 rounded;
+}
+
+.fb-skeleton-text {
+  @apply fb-skeleton h-4 w-3/4;
+}
+
+.fb-skeleton-title {
+  @apply fb-skeleton h-6 w-1/2;
+}
+
+.fb-skeleton-avatar {
+  @apply fb-skeleton rounded-full w-10 h-10;
+}
+
+.fb-skeleton-button {
+  @apply fb-skeleton h-10 w-24 rounded-lg;
+}
+
+.fb-skeleton-card {
+  @apply fb-skeleton h-32 rounded-xl;
+}
+
+.fb-skeleton-line {
+  @apply fb-skeleton h-3 w-full mb-2;
+}
+
+.fb-skeleton-line:last-child {
+  @apply w-2/3;
+}
+
+/* Shimmer effect */
+.fb-skeleton-shimmer {
+  @apply relative overflow-hidden bg-slate-200;
+}
+
+.fb-skeleton-shimmer::after {
+  @apply absolute inset-0 -translate-x-full;
+  content: '';
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.4),
+    transparent
+  );
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* Dark mode skeleton */
+[data-theme="dark"] .fb-skeleton {
+  @apply bg-slate-700;
+}
+
+[data-theme="dark"] .fb-skeleton-shimmer::after {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.1),
+    transparent
+  );
+}

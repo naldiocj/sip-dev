@@ -1,0 +1,58 @@
+<%# 
+  Flowbite Skeleton Loader Partial
+  Usage:
+    <%= render 'shared/skeleton', type: :card %>
+    <%= render 'shared/skeleton', type: :text, classes: 'w-full h-4' %>
+    <%= render 'shared/skeleton', type: :avatar %>
+    <%= render 'shared/skeleton', type: :button %>
+%>
+
+<% type ||= :text %>
+<% shimmer = local_assigns.fetch(:shimmer, false) %>
+
+<% case type.to_sym %>
+<% when :card %>
+  <div class="<%= shimmer ? 'fb-skeleton-shimmer' : 'fb-skeleton-card' %>"></div>
+  
+<% when :text %>
+  <div class="<%= shimmer ? 'fb-skeleton-shimmer' : 'fb-skeleton fb-skeleton-text' %> <%= classes %>"></div>
+  
+<% when :title %>
+  <div class="<%= shimmer ? 'fb-skeleton-shimmer' : 'fb-skeleton fb-skeleton-title' %> <%= classes %>"></div>
+  
+<% when :avatar %>
+  <div class="<%= shimmer ? 'fb-skeleton-shimmer' : 'fb-skeleton fb-skeleton-avatar' %> <%= classes %>"></div>
+  
+<% when :button %>
+  <div class="<%= shimmer ? 'fb-skeleton-shimmer' : 'fb-skeleton fb-skeleton-button' %> <%= classes %>"></div>
+  
+<% when :lines %>
+  <div class="space-y-2 <%= classes %>">
+    <% 3.times do %>
+      <div class="<%= shimmer ? 'fb-skeleton-shimmer' : 'fb-skeleton fb-skeleton-line' %>"></div>
+    <% end %>
+  </div>
+  
+<% when :table_row %>
+  <div class="flex items-center gap-4 p-4 <%= shimmer ? 'fb-skeleton-shimmer' : '' %>">
+    <div class="fb-skeleton fb-skeleton-avatar"></div>
+    <div class="flex-1 space-y-2">
+      <div class="fb-skeleton fb-skeleton-title h-3"></div>
+      <div class="fb-skeleton fb-skeleton-text h-3 w-2/3"></div>
+    </div>
+  </div>
+  
+<% when :stat_card %>
+  <div class="fb-card p-5 <%= shimmer ? 'fb-skeleton-shimmer' : '' %>">
+    <div class="flex items-center justify-between">
+      <div class="space-y-2">
+        <div class="fb-skeleton fb-skeleton-text h-3 w-20"></div>
+        <div class="fb-skeleton fb-skeleton-title h-6 w-12"></div>
+      </div>
+      <div class="fb-skeleton fb-skeleton-avatar"></div>
+    </div>
+  </div>
+  
+<% else %>
+  <div class="fb-skeleton <%= classes %>"></div>
+<% end %>
