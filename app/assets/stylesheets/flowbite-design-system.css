@@ -764,3 +764,123 @@
     @apply p-4;
   }
 }
+
+/* ============================================================
+   DARK MODE SUPPORT
+   ============================================================ */
+[data-theme="dark"] {
+  /* CSS Custom Properties for Dark Mode */
+  --fb-bg-primary: #0f172a;
+  --fb-bg-secondary: #1e293b;
+  --fb-bg-tertiary: #334155;
+  --fb-text-primary: #f8fafc;
+  --fb-text-secondary: #cbd5e1;
+  --fb-text-muted: #94a3b8;
+  --fb-border: #334155;
+  --fb-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+}
+
+[data-theme="dark"] body {
+  @apply bg-slate-900 text-slate-100;
+}
+
+[data-theme="dark"] .fb-card,
+[data-theme="dark"] .fb-stat-card {
+  @apply bg-slate-800 border-slate-700;
+}
+
+[data-theme="dark"] .fb-card-header {
+  @apply bg-slate-900/50 border-slate-700;
+}
+
+[data-theme="dark"] .fb-card-title {
+  @apply text-slate-100;
+}
+
+[data-theme="dark"] .fb-btn-secondary {
+  @apply bg-slate-800 text-slate-200 border-slate-600 hover:bg-slate-700;
+}
+
+[data-theme="dark"] .fb-input,
+[data-theme="dark"] .fb-select,
+[data-theme="dark"] .fb-textarea {
+  @apply bg-slate-800 border-slate-600 text-slate-100 placeholder-slate-400 focus:ring-blue-500 focus:border-blue-500;
+}
+
+[data-theme="dark"] .fb-table {
+  @apply text-slate-300;
+}
+
+[data-theme="dark"] .fb-table thead {
+  @apply bg-slate-900/50 border-slate-700;
+}
+
+[data-theme="dark"] .fb-table th {
+  @apply text-slate-400;
+}
+
+[data-theme="dark"] .fb-table td {
+  @apply border-slate-800 text-slate-300;
+}
+
+[data-theme="dark"] .fb-table tbody tr:hover {
+  @apply bg-slate-800/50;
+}
+
+[data-theme="dark"] .topbar {
+  @apply bg-slate-800 border-slate-700;
+}
+
+[data-theme="dark"] .topbar-title {
+  @apply text-slate-100;
+}
+
+[data-theme="dark"] .page-content {
+  @apply bg-slate-900;
+}
+
+[data-theme="dark"] .fb-badge-gray {
+  @apply bg-slate-700 text-slate-300 border-slate-600;
+}
+
+[data-theme="dark"] .fb-label {
+  @apply text-slate-300;
+}
+
+[data-theme="dark"] .fb-field-hint {
+  @apply text-slate-400;
+}
+
+[data-theme="dark"] .fb-alert-info {
+  @apply bg-blue-900/30 text-blue-200 border-blue-800;
+}
+
+[data-theme="dark"] .fb-alert-success {
+  @apply bg-green-900/30 text-green-200 border-green-800;
+}
+
+[data-theme="dark"] .fb-alert-warning {
+  @apply bg-yellow-900/30 text-yellow-200 border-yellow-800;
+}
+
+[data-theme="dark"] .fb-alert-error {
+  @apply bg-red-900/30 text-red-200 border-red-800;
+}
+
+/* Dark mode toggle button */
+.dark-mode-toggle {
+  @apply fb-btn-icon;
+}
+
+/* Smooth transition for theme change */
+*,
+*::before,
+*::after {
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+[data-theme="dark"] *,
+[data-theme="dark"] *::before,
+[data-theme="dark"] *::after {
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
