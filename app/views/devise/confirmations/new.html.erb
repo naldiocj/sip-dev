@@ -17,7 +17,7 @@
       <div class="fb-card-body">
         <p class="text-sm text-slate-600 mb-5">Não recebeu as instruções de confirmação?</p>
         
-        <%= form_for(resource, as: resource_name, url: auth_confirmation_path(resource_name), html: { class: "space-y-5" }) do |f| %>
+        <%= form_for(resource, as: resource_name, url: auth_confirmation_path(resource_name), html: { class: "space-y-5", data: { turbo: false } }) do |f| %>
           <!-- Email Field -->
           <div>
             <%= f.label :email, class: "fb-label" %>

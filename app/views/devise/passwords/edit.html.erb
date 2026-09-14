@@ -91,7 +91,7 @@
           </div>
         <% end %>
         
-        <%= form_for(resource, as: resource_name, url: account_password_path(resource_name), html: { method: :patch, class: "space-y-5" }) do |f| %>
+        <%= form_for(resource, as: resource_name, url: account_password_path(resource_name), html: { method: :patch, class: "space-y-5", data: { turbo: false } }) do |f| %>
           <%= f.hidden_field :reset_password_token %>
           
           <div class="form-group">

@@ -771,7 +771,7 @@
           </div>
           
           <!-- Login Form -->
-          <%= form_for(resource, as: resource_name, url: account_session_path(resource_name), html: { class: "space-y-5" }) do |f| %>
+          <%= form_for(resource, as: resource_name, url: account_session_path(resource_name), html: { class: "space-y-5", data: { turbo: false } }) do |f| %>
             
             <!-- Email Field -->
             <div class="form-group">
