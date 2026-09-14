@@ -86,7 +86,7 @@
             </td>
             <td>
               <% user.assigned_profiles.each do |profile| %>
-                <span class="fb-badge badge-<%= case profile.code
+                <span class="fb-badge fb-badge-<%= case profile.code
                   when 'ADMIN' then 'purple'
                   when 'DIRECAO_GERAL' then 'blue'
                   when 'INSTRUTOR' then 'green'

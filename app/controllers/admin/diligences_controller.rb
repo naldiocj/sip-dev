@@ -87,7 +87,7 @@ class Admin::DiligencesController < ApplicationController
 
   def diligence_params
     params.require(:diligence).permit(
-      :sip_process_id, :responsavel_id, :diligencia_type_id,
+      :process_id, :responsavel_id, :diligencia_type_id,
       :descricao, :estado, :data_prevista, :data_real,
       :result
     )

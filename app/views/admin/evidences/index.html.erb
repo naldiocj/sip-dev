@@ -15,7 +15,7 @@
 
 <!-- Filters -->
 <div class="card mb-6">
-  <div class="card-body p-4">
+  <div class="fb-card-body p-4">
     <%= form_with url: admin_evidences_path, method: :get, class: "flex flex-wrap gap-4 items-end" do |f| %>
       <div class="flex-1 min-w-[200px]">
         <%= f.label :search, "Pesquisar", class: "label" %>
@@ -37,8 +37,8 @@
 </div>
 
 <!-- Evidences List -->
-<div class="card">
-  <div class="card-body p-0">
+<div class="fb-card">
+  <div class="fb-card-body p-0">
     <% if @evidences.any? %>
       <div class="overflow-x-auto">
         <table class="table">
@@ -56,7 +56,7 @@
             <% @evidences.each do |e| %>
               <tr class="hover:bg-gray-50">
                 <td class="px-4 py-3">
-                  <span class="badge badge-blue"><%= e.evidence_type %></span>
+                  <span class="fb-badge fb-badge-blue"><%= e.evidence_type %></span>
                 </td>
                 <td class="px-4 py-3">
                   <% if e.process.present? %>

@@ -3,7 +3,7 @@ class Admin::ProcessesController < ApplicationController
 
   def index
     @processes = policy_scope(Process).page(params[:page]).per(20)
-    render "admin/sip_processes/index"
+    render "admin/processes/index"
   end
 
   def show

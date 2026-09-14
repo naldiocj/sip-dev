@@ -1,13 +1,14 @@
 <% content_for :page_title, "Dashboard" %>
 
-<div class="space-y-6">
-  <!-- Stats Grid -->
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-    <div class="fb-stat-card">
+<!-- Stats Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+  <div class="card">
+    <div class="card-body">
       <div class="flex items-center justify-between">
         <div>
-          <p class="fb-stat-label">Processos Totais</p>
-          <p class="fb-stat-value"><%= @process_count %></p>
+          <p class="text-sm text-gray-500">Processos Totais</p>
+          <p class="text-3xl font-bold text-gray-900 mt-1"><%= @process_count %></p>
+          <p class="text-xs text-green-600 mt-1"><%= @pending_count %> pendentes</p>
         </div>
         <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
           <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -16,26 +17,15 @@
         </div>
       </div>
     </div>
+  </div>
 
-    <div class="fb-stat-card">
+  <div class="card">
+    <div class="card-body">
       <div class="flex items-center justify-between">
         <div>
-          <p class="fb-stat-label">Pendentes</p>
-          <p class="fb-stat-value text-yellow-600"><%= @pending_count %></p>
-        </div>
-        <div class="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center">
-          <svg class="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-          </svg>
-        </div>
-      </div>
-    </div>
-
-    <div class="fb-stat-card">
-      <div class="flex items-center justify-between">
-        <div>
-          <p class="fb-stat-label">Diligências Ativas</p>
-          <p class="fb-stat-value text-purple-600"><%= @diligence_count %></p>
+          <p class="text-sm text-gray-500">Diligências Ativas</p>
+          <p class="text-3xl font-bold text-purple-600 mt-1"><%= @diligence_count %></p>
+          <p class="text-xs text-gray-400 mt-1">em andamento</p>
         </div>
         <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
           <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -44,12 +34,15 @@
         </div>
       </div>
     </div>
+  </div>
 
-    <div class="fb-stat-card">
+  <div class="card">
+    <div class="card-body">
       <div class="flex items-center justify-between">
         <div>
-          <p class="fb-stat-label">Mandados</p>
-          <p class="fb-stat-value text-green-600"><%= @mandate_count %></p>
+          <p class="text-sm text-gray-500">Mandados Ativos</p>
+          <p class="text-3xl font-bold text-green-600 mt-1"><%= @mandate_count %></p>
+          <p class="text-xs text-red-600 mt-1"><%= @overdue_mandates.count %> vencidos</p>
         </div>
         <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
           <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -60,50 +53,225 @@
     </div>
   </div>
 
-  <!-- Quick Actions -->
-  <div class="fb-card">
-    <div class="fb-card-header">
-      <h3 class="font-semibold text-gray-900">Ações Rápidas</h3>
-    </div>
-    <div class="fb-card-body">
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <% if can? :PROCESSO_CREATE %>
-          <%= link_to new_admin_process_path, class: "btn btn-primary w-full" do %>
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-            </svg>
-            Novo Processo
-          <% end %>
-        <% end %>
-        
-        <% if can? :DILIGENCIA_CREATE %>
-          <%= link_to new_admin_diligence_path, class: "btn btn-secondary w-full" do %>
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
-            </svg>
-            Nova Diligência
-          <% end %>
-        <% end %>
-        
-        <% if can? :USER_MANAGE %>
-          <%= link_to admin_users_path, class: "btn btn-secondary w-full" do %>
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
-            </svg>
-            Utilizadores
-          <% end %>
-        <% end %>
+  <div class="card">
+    <div class="card-body">
+      <div class="flex items-center justify-between">
+        <div>
+          <p class="text-sm text-gray-500">Evidências</p>
+          <p class="text-3xl font-bold text-yellow-600 mt-1"><%= @evidence_count %></p>
+          <p class="text-xs text-gray-400 mt-1">documentos anexados</p>
+        </div>
+        <div class="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center">
+          <svg class="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+          </svg>
+        </div>
       </div>
     </div>
   </div>
+</div>
 
-  <!-- Recent Activity -->
-  <div class="fb-card">
-    <div class="fb-card-header">
-      <h3 class="font-semibold text-gray-900">Actividade Recente</h3>
+<!-- Charts Row -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+  <!-- Processes by State Chart -->
+  <div class="card">
+    <div class="card-header">
+      <h3 class="font-semibold text-gray-900">Processos por Estado</h3>
     </div>
-    <div class="fb-card-body">
-      <p class="text-gray-500 text-sm">Sistema pronto para uso. Configure os primeiros utilizadores e organizações.</p>
+    <div class="card-body">
+      <canvas id="processesByStateChart" height="200"></canvas>
+    </div>
+  </div>
+
+  <!-- Evidences by Type Chart -->
+  <div class="card">
+    <div class="card-header">
+      <h3 class="font-semibold text-gray-900">Evidências por Tipo</h3>
+    </div>
+    <div class="card-body">
+      <canvas id="evidencesByTypeChart" height="200"></canvas>
     </div>
   </div>
 </div>
+
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+  <!-- Diligences by State Chart -->
+  <div class="card">
+    <div class="card-header">
+      <h3 class="font-semibold text-gray-900">Diligências por Estado</h3>
+    </div>
+    <div class="card-body">
+      <canvas id="diligencesByStateChart" height="200"></canvas>
+    </div>
+  </div>
+
+  <!-- Quick Stats -->
+  <div class="card">
+    <div class="card-header">
+      <h3 class="font-semibold text-gray-900">Estatísticas Rápidas</h3>
+    </div>
+    <div class="card-body">
+      <div class="space-y-3">
+        <div class="flex items-center justify-between">
+          <span class="text-sm text-gray-600">Organizações</span>
+          <span class="font-medium"><%= @org_count %></span>
+        </div>
+        <div class="flex items-center justify-between">
+          <span class="text-sm text-gray-600">Utilizadores Activos</span>
+          <span class="font-medium"><%= @user_count %></span>
+        </div>
+        <div class="flex items-center justify-between">
+          <span class="text-sm text-gray-600">Processos Hoje</span>
+          <span class="font-medium"><%= Sip::Process.where(created_at: Time.current.beginning_of_day..Time.current.end_of_day).count %></span>
+        </div>
+        <div class="flex items-center justify-between">
+          <span class="text-sm text-gray-600">Mandados Vencidos</span>
+          <span class="font-medium text-red-600"><%= @overdue_mandates.count %></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Recent Activity Row -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+  <!-- Recent Processes -->
+  <div class="card">
+    <div class="card-header flex items-center justify-between">
+      <h3 class="font-semibold text-gray-900">Processos Recentes</h3>
+      <%= link_to admin_processes_path, class: "text-sm text-blue-600 hover:text-blue-700", data: { turbo: false } do %>
+        Ver todos
+      <% end %>
+    </div>
+    <div class="card-body p-0">
+      <% if @recent_processes.any? %>
+        <div class="divide-y divide-gray-100">
+          <% @recent_processes.each do |p| %>
+            <div class="px-4 py-3 flex items-center justify-between hover:bg-gray-50">
+              <div>
+                <p class="text-sm font-medium text-gray-900"><%= p.numero %></p>
+                <p class="text-xs text-gray-500"><%= truncate(p.titulo, length: 30) %></p>
+              </div>
+              <%= state_badge(p.state_code) %>
+            </div>
+          <% end %>
+        </div>
+      <% else %>
+        <div class="text-center py-8 text-gray-400">
+          <p>Nenhum processo registado</p>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <!-- Recent Evidences -->
+  <div class="card">
+    <div class="card-header flex items-center justify-between">
+      <h3 class="font-semibold text-gray-900">Evidências Recentes</h3>
+      <%= link_to admin_evidences_path, class: "text-sm text-blue-600 hover:text-blue-700", data: { turbo: false } do %>
+        Ver todos
+      <% end %>
+    </div>
+    <div class="card-body p-0">
+      <% if @recent_evidences.any? %>
+        <div class="divide-y divide-gray-100">
+          <% @recent_evidences.each do |e| %>
+            <div class="px-4 py-3 flex items-center justify-between hover:bg-gray-50">
+              <div>
+                <p class="text-sm font-medium text-gray-900"><%= e.evidence_type %></p>
+                <p class="text-xs text-gray-500"><%= truncate(e.descricao, length: 30) %></p>
+              </div>
+              <span class="text-xs text-gray-400"><%= time_ago_in_words(e.created_at) %> atrás</span>
+            </div>
+          <% end %>
+        </div>
+      <% else %>
+        <div class="text-center py-8 text-gray-400">
+          <p>Nenhuma evidência registada</p>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<!-- Charts JavaScript -->
+<script>
+  // Processes by State
+  const processesCtx = document.getElementById('processesByStateChart');
+  if (processesCtx) {
+    new Chart(processesCtx, {
+      type: 'doughnut',
+      data: {
+        labels: <%= @processes_by_state.keys.map { |k| k.humanize }.to_json %>,
+        datasets: [{
+          data: <%= @processes_by_state.values.to_json %>,
+          backgroundColor: ['#3b82f6', '#eab308', '#22c55e', '#ef4444', '#6b7280', '#8b5cf6', '#f97316', '#06b6d4', '#84cc16', '#ec4899', '#64748b']
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { position: 'bottom' }
+        }
+      }
+    });
+  }
+
+  // Evidences by Type
+  const evidencesCtx = document.getElementById('evidencesByTypeChart');
+  if (evidencesCtx) {
+    new Chart(evidencesCtx, {
+      type: 'bar',
+      data: {
+        labels: <%= @evidences_by_type.keys.map { |k| k.humanize }.to_json %>,
+        datasets: [{
+          label: 'Quantidade',
+          data: <%= @evidences_by_type.values.to_json %>,
+          backgroundColor: '#3b82f6'
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { display: false }
+        },
+        scales: {
+          y: { beginAtZero: true, ticks: { stepSize: 1 } }
+        }
+      }
+    });
+  }
+
+  // Diligences by State
+  const diligenicesCtx = document.getElementById('diligencesByStateChart');
+  if (diligenicesCtx) {
+    new Chart(diligenicesCtx, {
+      type: 'bar',
+      data: {
+        labels: <%= @diligences_by_state.keys.map { |k| 
+          case k
+          when 'agendada' then 'Agendada'
+          when 'em_andamento' then 'Em Andamento'
+          when 'concluida' then 'Concluída'
+          when 'cancelada' then 'Cancelada'
+          else k
+          end
+        }.to_json %>,
+        datasets: [{
+          label: 'Quantidade',
+          data: <%= @diligences_by_state.values.to_json %>,
+          backgroundColor: ['#3b82f6', '#eab308', '#22c55e', '#ef4444']
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { display: false }
+        },
+        scales: {
+          y: { beginAtZero: true, ticks: { stepSize: 1 } }
+        }
+      }
+    });
+  }
+</script>

@@ -34,8 +34,8 @@
                 { class: "select" } %>
         </div>
         <div>
-          <%= f.label :sip_process_id, "Processo (opcional)", class: "label" %>
-          <%= f.collection_select :sip_process_id, @processes, :id, -> { |p| "#{p.numero}/#{p.ano} — #{p.titulo}" }, { include_hidden: true }, { class: "select" } %>
+          <%= f.label :process_id, "Processo (opcional)", class: "label" %>
+          <%= f.collection_select :process_id, @processes, :id, -> { |p| "#{p.numero}/#{p.ano} — #{p.titulo}" }, { include_hidden: true }, { class: "select" } %>
         </div>
       </div>
 

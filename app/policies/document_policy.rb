@@ -29,8 +29,8 @@ class DocumentPolicy < ApplicationPolicy
 
     org_ids = user.organizations.pluck(:id)
     scope.joins(:process)
-         .where(sip_processes: { organizacao_id: org_ids })
-         .or(scope.joins(:process).where(sip_processes: { responsavel_id: user.id }))
-         .or(scope.joins(:process).where(sip_processes: { criador_id: user.id }))
+         .where(processes: { organizacao_id: org_ids })
+         .or(scope.joins(:process).where(processes: { responsavel_id: user.id }))
+         .or(scope.joins(:process).where(processes: { criador_id: user.id }))
   end
 end

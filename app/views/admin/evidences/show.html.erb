@@ -10,11 +10,11 @@
 
 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
   <div class="lg:col-span-2 space-y-6">
-    <div class="card">
-      <div class="card-header flex items-start justify-between">
+    <div class="fb-card">
+      <div class="fb-card-header flex items-start justify-between">
         <div>
           <div class="flex items-center gap-3 mb-2">
-            <span class="badge badge-blue"><%= @evidence.evidence_type %></span>
+            <span class="fb-badge fb-badge-blue"><%= @evidence.evidence_type %></span>
           </div>
           <h1 class="text-2xl font-bold text-gray-900">Evidência</h1>
         </div>
@@ -33,7 +33,7 @@
           <% end %>
         </div>
       </div>
-      <div class="card-body">
+      <div class="fb-card-body">
         <p class="text-gray-600"><%= @evidence.descricao %></p>
 
         <% if @evidence.file.attached? %>
@@ -60,11 +60,11 @@
   </div>
 
   <div class="space-y-6">
-    <div class="card">
-      <div class="card-header">
+    <div class="fb-card">
+      <div class="fb-card-header">
         <h3 class="font-semibold text-gray-900">Informações</h3>
       </div>
-      <div class="card-body space-y-4">
+      <div class="fb-card-body space-y-4">
         <div>
           <p class="text-xs text-gray-500 uppercase">Processo</p>
           <% if @evidence.process.present? %>

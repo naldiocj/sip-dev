@@ -4,8 +4,8 @@ class User < ApplicationRecord
   has_many :user_assignments, dependent: :destroy
   has_many :organizations, through: :user_assignments
   has_many :assigned_profiles, through: :user_assignments, source: :profile
-  has_many :created_sip_processes, class_name: "SipProcess", foreign_key: :criador_id, dependent: :nullify
-  has_many :managed_sip_processes, class_name: "SipProcess", foreign_key: :responsavel_id, dependent: :nullify
+  has_many :created_processes, class_name: "Process", foreign_key: :criador_id, dependent: :nullify
+  has_many :managed_processes, class_name: "Process", foreign_key: :responsavel_id, dependent: :nullify
   has_many :workflow_transitions_as_actor, class_name: "WorkflowTransition", foreign_key: :actor_id, dependent: :nullify
   has_one :account, foreign_key: :id, primary_key: :id, dependent: :destroy
 

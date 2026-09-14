@@ -18,7 +18,7 @@
           <div>
             <div class="flex items-center gap-3">
               <span class="fb-badge fb-badge fb-badge-blue"><%= @organization.code %></span>
-              <span class="fb-badge badge-<%= case @organization.level
+              <span class="fb-badge fb-badge-<%= case @organization.level
                 when 'root' then 'purple'
                 when 'direccao_geral' then 'blue'
                 when 'direccao' then 'green'

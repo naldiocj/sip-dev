@@ -1,47 +1,38 @@
 <% content_for :page_title, "Distribuir Processo" %>
 
-<div class="max-w-2xl">
-  <nav class="flex items-center gap-2 text-sm text-gray-500 mb-6">
-    <%= link_to "Processos", admin_processes_path, class: "hover:text-gray-900" %>
-    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-    </svg>
-    <%= link_to @process.numero, admin_process_path(@process), class: "hover:text-gray-900" %>
-    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-    </svg>
-    <span class="text-gray-900">Distribuir</span>
-  </nav>
+<%= render "shared/breadcrumb" %>
 
-  <div class="fb-card">
-    <div class="fb-card-header">
-      <h3 class="font-semibold text-gray-900">Distribuir Processo</h3>
-      <p class="text-sm text-gray-500 mt-1"><%= @process.numero %>/<%= @process.ano %></p>
-    </div>
-    <div class="fb-card-body">
-      <%= form_with url: distribute_admin_process_path(@process), method: :post, local: true do |f| %>
-        <div class="space-y-4">
-          <div>
-            <%= f.label :destination_organization_id, "Organização de Destino", class: "label" %>
-            <%= f.collection_select :destination_organization_id, @organizations, :id, :full_path, { prompt: "Seleccionar organização..." }, { class: "select", required: true } %>
-          </div>
-
-          <div>
-            <%= f.label :destination_user_id, "Responsável", class: "label" %>
-            <%= f.collection_select :destination_user_id, @users, :id, -> { |u| "#{u.first_name} #{u.last_name}" }, { prompt: "Seleccionar responsável (opcional)" }, { class: "select" } %>
-          </div>
-
-          <div>
-            <%= f.label :reason, "Motivo", class: "label" %>
-            <%= f.text_area :reason, rows: 3, class: "textarea", placeholder: "Indique o motivo da distribuição" %>
-          </div>
-        </div>
-
-        <div class="flex items-center justify-end gap-3 mt-6">
-          <%= link_to "Cancelar", admin_process_path(@process), class: "btn btn-secondary" %>
-          <%= f.submit "Distribuir", class: "btn btn-primary" %>
-        </div>
-      <% end %>
-    </div>
+<div class="fb-card max-w-2xl">
+  <div class="fb-card-header">
+    <h3 class="fb-card-title">Distribuir Processo <%= @process.number %></h3>
+  </div>
+  <div class="fb-card-body">
+    <%= form_with url: distribute_admin_process_path(@process), method: :patch, class: "space-y-5" do |f| %>
+      <!-- Assignee Field -->
+      <div>
+        <%= f.label :assignee_id, class: "fb-label" %>
+        <%= f.collection_select :assignee_id, @available_assignees, :id, :full_name, { prompt: "Selecionar responsável..." }, class: "fb-select" %>
+        <% @process.errors[:assignee_id].each do |message| %>
+          <span class="fb-error"><%= message %></span>
+        <% end %>
+      </div>
+      
+      <!-- Profile Field -->
+      <div>
+        <%= f.label :profile_code, class: "fb-label" %>
+        <%= f.select :profile_code, @available_profiles, { prompt: "Selecionar perfil..." }, class: "fb-select" %>
+        <% @process.errors[:profile_code].each do |message| %>
+          <span class="fb-error"><%= message %></span>
+        <% end %>
+      </div>
+      
+      <!-- Form Actions -->
+      <div class="flex items-center justify-end gap-3 pt-4 border-t border-slate-200">
+        <%= link_to admin_process_path(@process), class: "fb-btn fb-btn-secondary" do %>
+          Cancelar
+        <% end %>
+        <%= f.submit "Distribuir", class: "fb-btn fb-btn-primary" %>
+      </div>
+    <% end %>
   </div>
 </div>
