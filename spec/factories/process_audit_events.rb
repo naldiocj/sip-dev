@@ -6,7 +6,7 @@ FactoryBot.define do
     entity_type { "Process" }
     created_at { Time.current }
     
-    process { nil }
+    association :process, factory: :process
     actor { create(:user) }
   end
 end
