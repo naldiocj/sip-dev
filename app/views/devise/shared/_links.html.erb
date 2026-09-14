@@ -1,19 +1,19 @@
-<%- if controller_name != 'sessions' %>
-  <%= link_to "Entrar", new_account_session_path(resource_name), class: "fb-btn fb-btn-link w-full justify-center" %>
-<% end -%>
-
-<%- if devise_mapping.registerable? && controller_name != 'registrations' %>
-  <%= link_to "Criar conta", new_registration_path(resource_name), class: "fb-btn fb-btn-secondary w-full justify-center" %>
-<% end -%>
-
-<%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
-  <%= link_to "Recuperar palavra-passe", new_password_path(resource_name), class: "fb-btn fb-btn-link w-full justify-center" %>
-<% end -%>
-
-<%- if devise_mapping.confirmable? && controller_name != 'confirmations' %>
-  <%= link_to "Não recebeu as instruções de confirmação?", new_confirmation_path(resource_name), class: "fb-btn fb-btn-link w-full justify-center text-sm" %>
-<% end -%>
-
-<%- if devise_mapping.lockable? && resource_class.unlock_strategy_enabled?(:email) && controller_name != 'unlocks' %>
-  <%= link_to "Não recebeu as instruções de desbloqueio?", new_unlock_path(resource_name), class: "fb-btn fb-btn-link w-full justify-center text-sm" %>
-<% end -%>
+<div class="space-y-2 text-sm">
+  <% if controller_name != 'sessions' %>
+    <%= link_to new_account_session_path(resource_name), class: "flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg border border-slate-200 text-slate-700 hover:bg-slate-50 transition-colors font-medium" do %>
+      <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"/>
+      </svg>
+      Iniciar Sessão
+    <% end %>
+  <% end -%>
+  
+  <% if devise_mapping.recoverable? && controller_name != 'passwords' %>
+    <%= link_to new_password_path(resource_name), class: "flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg border border-slate-200 text-slate-700 hover:bg-slate-50 transition-colors font-medium" do %>
+      <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"/>
+      </svg>
+      Recuperar Palavra-passe
+    <% end %>
+  <% end -%>
+</div>
