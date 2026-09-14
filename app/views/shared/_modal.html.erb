@@ -1,0 +1,41 @@
+<%# 
+  Flowbite Modal Partial
+  Usage:
+    <%= render 'shared/modal', id: 'my-modal', title: 'Confirmar Ação', size: :md do %>
+      <p>Tem certeza que deseja continuar?</p>
+    <% end %>
+%>
+
+<% size ||= :md %>
+<% dismissible = local_assigns.fetch(:dismissible, true) %>
+
+<div id="<%= id %>" 
+     class="fb-modal fb-modal-<%= size %>"
+     data-controller="modal"
+     data-modal-dismissable-value="<%= dismissible %>">
+  <div class="fb-modal-overlay" data-modal-target="dialog" onclick="document.getElementById('<%= id %>').querySelector('[data-controller=modal]').close()"></div>
+  <div class="fb-modal-container">
+    <div class="fb-modal-content">
+      <% if title.present? %>
+        <div class="fb-modal-header">
+          <h3 class="fb-modal-title"><%= title %></h3>
+          <button type="button" class="fb-modal-close" onclick="document.getElementById('<%= id %>').querySelector('[data-controller=modal]').close()">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+          </button>
+        </div>
+      <% end %>
+      
+      <div class="fb-modal-body">
+        <%= yield %>
+      </div>
+      
+      <% if footer.present? %>
+        <div class="fb-modal-footer">
+          <%= footer %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
