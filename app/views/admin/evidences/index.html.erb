@@ -5,7 +5,7 @@
     <h1 class="text-2xl font-bold text-gray-900">Evidências</h1>
     <p class="text-sm text-gray-500 mt-1">Gestão de provas e documentos probatórios</p>
   </div>
-  <%= link_to new_admin_evidence_path, class: "btn btn-primary", data: { turbo: false } do %>
+  <%= link_to new_admin_evidence_path, class: "fb-btn fb-btn-primary", data: { turbo: false } do %>
     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
     </svg>
@@ -29,8 +29,8 @@
               { class: "select", data: { turbo: false } %>
       </div>
       <div class="flex gap-2">
-        <%= f.submit "Filtrar", class: "btn btn-primary" %>
-        <%= link_to "Limpar", admin_evidences_path, class: "btn btn-secondary" %>
+        <%= f.submit "Filtrar", class: "fb-btn fb-btn-primary" %>
+        <%= link_to "Limpar", admin_evidences_path, class: "fb-btn fb-btn-secondary" %>
       </div>
     <% end %>
   </div>

@@ -2,11 +2,11 @@
 
 <!-- Stats Grid -->
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
-  <div class="card">
-    <div class="card-body">
+  <div class="fb-card">
+    <div class="fb-card-body">
       <div class="flex items-center justify-between">
         <div>
-          <p class="text-sm text-gray-500">Processos Totais</p>
+          <p class="fb-stat-label">Processos Totais</p>
           <p class="text-3xl font-bold text-gray-900 mt-1"><%= @process_count %></p>
           <p class="text-xs text-green-600 mt-1"><%= @pending_count %> pendentes</p>
         </div>
@@ -19,11 +19,11 @@
     </div>
   </div>
 
-  <div class="card">
-    <div class="card-body">
+  <div class="fb-card">
+    <div class="fb-card-body">
       <div class="flex items-center justify-between">
         <div>
-          <p class="text-sm text-gray-500">Diligências Ativas</p>
+          <p class="fb-stat-label">Diligências Ativas</p>
           <p class="text-3xl font-bold text-purple-600 mt-1"><%= @diligence_count %></p>
           <p class="text-xs text-gray-400 mt-1">em andamento</p>
         </div>
@@ -36,11 +36,11 @@
     </div>
   </div>
 
-  <div class="card">
-    <div class="card-body">
+  <div class="fb-card">
+    <div class="fb-card-body">
       <div class="flex items-center justify-between">
         <div>
-          <p class="text-sm text-gray-500">Mandados Ativos</p>
+          <p class="fb-stat-label">Mandados Ativos</p>
           <p class="text-3xl font-bold text-green-600 mt-1"><%= @mandate_count %></p>
           <p class="text-xs text-red-600 mt-1"><%= @overdue_mandates.count %> vencidos</p>
         </div>
@@ -53,11 +53,11 @@
     </div>
   </div>
 
-  <div class="card">
-    <div class="card-body">
+  <div class="fb-card">
+    <div class="fb-card-body">
       <div class="flex items-center justify-between">
         <div>
-          <p class="text-sm text-gray-500">Evidências</p>
+          <p class="fb-stat-label">Evidências</p>
           <p class="text-3xl font-bold text-yellow-600 mt-1"><%= @evidence_count %></p>
           <p class="text-xs text-gray-400 mt-1">documentos anexados</p>
         </div>
@@ -74,21 +74,21 @@
 <!-- Charts Row -->
 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
   <!-- Processes by State Chart -->
-  <div class="card">
-    <div class="card-header">
+  <div class="fb-card">
+    <div class="fb-card-header">
       <h3 class="font-semibold text-gray-900">Processos por Estado</h3>
     </div>
-    <div class="card-body">
+    <div class="fb-card-body">
       <canvas id="processesByStateChart" height="200"></canvas>
     </div>
   </div>
 
   <!-- Evidences by Type Chart -->
-  <div class="card">
-    <div class="card-header">
+  <div class="fb-card">
+    <div class="fb-card-header">
       <h3 class="font-semibold text-gray-900">Evidências por Tipo</h3>
     </div>
-    <div class="card-body">
+    <div class="fb-card-body">
       <canvas id="evidencesByTypeChart" height="200"></canvas>
     </div>
   </div>
@@ -96,21 +96,21 @@
 
 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
   <!-- Diligences by State Chart -->
-  <div class="card">
-    <div class="card-header">
+  <div class="fb-card">
+    <div class="fb-card-header">
       <h3 class="font-semibold text-gray-900">Diligências por Estado</h3>
     </div>
-    <div class="card-body">
+    <div class="fb-card-body">
       <canvas id="diligencesByStateChart" height="200"></canvas>
     </div>
   </div>
 
   <!-- Quick Stats -->
-  <div class="card">
-    <div class="card-header">
+  <div class="fb-card">
+    <div class="fb-card-header">
       <h3 class="font-semibold text-gray-900">Estatísticas Rápidas</h3>
     </div>
-    <div class="card-body">
+    <div class="fb-card-body">
       <div class="space-y-3">
         <div class="flex items-center justify-between">
           <span class="text-sm text-gray-600">Organizações</span>
@@ -136,7 +136,7 @@
 <!-- Recent Activity Row -->
 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
   <!-- Recent Processes -->
-  <div class="card">
+  <div class="fb-card">
     <div class="card-header flex items-center justify-between">
       <h3 class="font-semibold text-gray-900">Processos Recentes</h3>
       <%= link_to admin_processes_path, class: "text-sm text-blue-600 hover:text-blue-700", data: { turbo: false } do %>
@@ -165,7 +165,7 @@
   </div>
 
   <!-- Recent Evidences -->
-  <div class="card">
+  <div class="fb-card">
     <div class="card-header flex items-center justify-between">
       <h3 class="font-semibold text-gray-900">Evidências Recentes</h3>
       <%= link_to admin_evidences_path, class: "text-sm text-blue-600 hover:text-blue-700", data: { turbo: false } do %>
