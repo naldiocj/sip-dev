@@ -52,6 +52,6 @@ group :test do
 end
 
 gem "importmap-rails", "~> 2.2"
-gem "json", "~> 2.8"
+gem "json", "~> 3.0"
 
 gem "tilt", "~> 2.9"
