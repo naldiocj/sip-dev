@@ -12,7 +12,7 @@ class Admin::DashboardController < ApplicationController
     @recent_evidences = Evidence.order(created_at: :desc).limit(10)
 
     # Chart data - processes by state
-    @processes_by_state = ProcessState.joins(:processes).group("process_states.code").count
+    @processes_by_state = Sip::Process.joins(:process_state).group("process_states.code").count
     @processes_by_state = @processes_by_state.sort_by { |k, v| -v }.to_h
 
     # Chart data - evidence by type

@@ -2,6 +2,9 @@ module Sip
   class Process < ApplicationRecord
     self.table_name = "processes"
 
+    PRIORITIES = %w[normal alta urgente].freeze
+    STATES = ProcessState.pluck(:code)
+
     belongs_to :process_type
     belongs_to :process_nature
     belongs_to :process_origin

@@ -36,7 +36,7 @@
         <!-- Priority Field -->
         <div>
           <%= f.label :priority, class: "fb-label" %>
-          <%= f.select :priority, Process::PRIORITIES.map { |p| [p.humanize, p] }, { include_blank: true }, class: "fb-select" %>
+          <%= f.select :priority, Sip::Process::PRIORITIES.map { |p| [p.humanize, p] }, { include_blank: true }, class: "fb-select" %>
           <% process.errors[:priority].each do |message| %>
             <span class="fb-error"><%= message %></span>
           <% end %>
@@ -46,7 +46,7 @@
       <!-- State Field -->
       <div>
         <%= f.label :state, class: "fb-label" %>
-        <%= f.select :state, Process::STATES.map { |s| [s.humanize, s] }, { include_blank: true }, class: "fb-select" %>
+        <%= f.select :state, Sip::Process::STATES.map { |s| [s.humanize, s] }, { include_blank: true }, class: "fb-select" %>
         <% process.errors[:state].each do |message| %>
           <span class="fb-error"><%= message %></span>
         <% end %>

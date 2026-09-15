@@ -3,7 +3,7 @@ class Organization < ApplicationRecord
   has_many :children, class_name: "Organization", foreign_key: :parent_id, dependent: :restrict_with_error
   has_many :users, dependent: :restrict_with_error
   has_many :user_assignments, dependent: :destroy
-  has_many :processes, foreign_key: :organizacao_id, dependent: :restrict_with_error
+  has_many :processes, class_name: "Sip::Process", foreign_key: :organizacao_id, dependent: :restrict_with_error
 
   VALID_LEVELS = %w[
     root
