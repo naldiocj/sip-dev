@@ -1,7 +1,13 @@
 class SessionsController < Devise::SessionsController
-  skip_before_action :authenticate_user!, only: [:new, :create, :destroy]
+  skip_before_action :authenticate_account!, only: [ :new, :create, :destroy ]
   skip_after_action :verify_authorized, :verify_policy_scoped
   before_action :configure_permitted_parameters, if: :devise_controller?
+
+  def create
+    super
+  rescue ActionController::UnknownFormat
+    redirect_to after_sign_in_path_for(resource)
+  end
 
   protected
 
@@ -16,6 +22,6 @@ class SessionsController < Devise::SessionsController
   private
 
   def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:sign_in, keys: [:login])
+    devise_parameter_sanitizer.permit(:sign_in, keys: [ :login ])
   end
 end

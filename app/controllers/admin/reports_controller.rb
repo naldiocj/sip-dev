@@ -1,5 +1,5 @@
 class Admin::ReportsController < ApplicationController
-  skip_before_action :authenticate_user!, only: [ :processes, :diligences, :mandates, :evidences ]
+  skip_before_action :authenticate_account!, only: [ :processes, :diligences, :mandates, :evidences ]
   skip_before_action :verify_authenticity_token, only: [ :processes, :diligences, :mandates, :evidences ], raise: false
 
   def processes
@@ -107,7 +107,7 @@ class Admin::ReportsController < ApplicationController
     xlsx = Axlsx::Package.new
     wb = xlsx.workbook
     wb.add_worksheet(name: "Processos") do |sheet|
-      sheet.add_row ["Número", "Ano", "Título", "Estado", "Organização", "Responsável", "Data Entrada", "Criado em"]
+      sheet.add_row [ "Número", "Ano", "Título", "Estado", "Organização", "Responsável", "Data Entrada", "Criado em" ]
       @processes.each do |p|
         sheet.add_row [
           p.numero,
@@ -128,7 +128,7 @@ class Admin::ReportsController < ApplicationController
     xlsx = Axlsx::Package.new
     wb = xlsx.workbook
     wb.add_worksheet(name: "Diligências") do |sheet|
-      sheet.add_row ["Tipo", "Descrição", "Estado", "Responsável", "Data Prevista", "Data Real"]
+      sheet.add_row [ "Tipo", "Descrição", "Estado", "Responsável", "Data Prevista", "Data Real" ]
       @diligences.each do |d|
         sheet.add_row [
           d.diligencia_type&.name,
@@ -147,7 +147,7 @@ class Admin::ReportsController < ApplicationController
     xlsx = Axlsx::Package.new
     wb = xlsx.workbook
     wb.add_worksheet(name: "Mandados") do |sheet|
-      sheet.add_row ["Tipo", "Destino", "Descrição", "Estado", "Emissor", "Data Emissão", "Data Prazo"]
+      sheet.add_row [ "Tipo", "Destino", "Descrição", "Estado", "Emissor", "Data Emissão", "Data Prazo" ]
       @mandates.each do |m|
         sheet.add_row [
           m.mandate_type,
@@ -167,7 +167,7 @@ class Admin::ReportsController < ApplicationController
     xlsx = Axlsx::Package.new
     wb = xlsx.workbook
     wb.add_worksheet(name: "Evidências") do |sheet|
-      sheet.add_row ["Tipo", "Descrição", "Processo", "Coletor", "Data Coleta"]
+      sheet.add_row [ "Tipo", "Descrição", "Processo", "Coletor", "Data Coleta" ]
       @evidences.each do |e|
         sheet.add_row [
           e.evidence_type,

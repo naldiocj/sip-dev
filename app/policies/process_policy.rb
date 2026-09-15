@@ -38,4 +38,17 @@ class ProcessPolicy < ApplicationPolicy
   def deactivate?
     admin?
   end
+
+  def self.scope(pundit_user, scope)
+    return scope.where.not(id: nil) if admin_for?(pundit_user)
+
+    user = pundit_user.is_a?(Hash) ? pundit_user[:user] : pundit_user
+    org_ids = user&.organizations&.pluck(:id) || []
+    scope.joins(:organizacao).where(organizations: { id: org_ids }).distinct
+  end
+
+  def self.admin_for?(pundit_user)
+    user = pundit_user.is_a?(Hash) ? pundit_user[:user] : pundit_user
+    user&.has_profile?("ADMIN") == true
+  end
 end

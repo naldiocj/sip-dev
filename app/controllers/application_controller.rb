@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   allow_browser versions: :modern
 
   include Pundit::Authorization
-  before_action :authenticate_user!
+  before_action :authenticate_account!
   after_action :verify_authorized, except: :index
   after_action :verify_policy_scoped, only: :index
 

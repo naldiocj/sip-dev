@@ -1,6 +1,6 @@
 class AuthController < ApplicationController
   layout false
-  skip_before_action :authenticate_user!, only: [ :login, :create_account, :reset_password_request, :reset_password ]
+  skip_before_action :authenticate_account!, only: [ :login, :create_account, :reset_password_request, :reset_password ]
   skip_after_action :verify_authorized,  only: [ :login, :create_account, :reset_password_request, :reset_password ]
   skip_after_action :verify_policy_scoped, only: [ :login, :create_account, :reset_password_request, :reset_password ]
 

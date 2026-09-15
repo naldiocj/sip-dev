@@ -1,5 +1,5 @@
 class ConfirmationsController < Devise::ConfirmationsController
-  skip_before_action :authenticate_user!, only: [:new, :create, :show]
+  skip_before_action :authenticate_account!, only: [ :new, :create, :show ]
   skip_after_action :verify_authorized, :verify_policy_scoped
 
   protected

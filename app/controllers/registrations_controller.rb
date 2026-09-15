@@ -1,5 +1,5 @@
 class RegistrationsController < Devise::RegistrationsController
-  skip_before_action :authenticate_user!, only: [:new, :create, :edit, :update]
+  skip_before_action :authenticate_account!, only: [ :new, :create, :edit, :update ]
   skip_after_action :verify_authorized, :verify_policy_scoped
   before_action :configure_permitted_parameters, if: :devise_controller?
 
@@ -16,7 +16,7 @@ class RegistrationsController < Devise::RegistrationsController
   private
 
   def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:login, :email, :password, :password_confirmation])
-    devise_parameter_sanitizer.permit(:account_update, keys: [:login, :email])
+    devise_parameter_sanitizer.permit(:sign_up, keys: [ :login, :email, :password, :password_confirmation ])
+    devise_parameter_sanitizer.permit(:account_update, keys: [ :login, :email ])
   end
 end
