@@ -1,0 +1,4 @@
+workflow: feature
+taskId: feature-1789428195459
+startedAt: 2026-09-14T23:23:15.459Z
+params: {"task":"TASK-001-puma-ssl-fix","description":"Fix Puma SSL parse error in development","impact":"minimal-change","scope":"security-initializer-dockercompose"}

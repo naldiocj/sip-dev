@@ -1,5 +1,5 @@
 {
-  "missionId": "task-1789421303741",
+  "missionId": "task-1789428069766",
   "phase": "discovery",
   "status": "running",
   "risk": "R2",
@@ -33,22 +33,33 @@
     {
       "name": "DiscoveryGate",
       "result": "PASS",
-      "timestamp": "2026-09-14T21:28:23.741Z"
+      "timestamp": "2026-09-14T23:21:09.766Z"
     },
     {
       "name": "VersionGate",
       "result": "PASS",
       "details": [],
-      "timestamp": "2026-09-14T21:28:23.741Z"
+      "timestamp": "2026-09-14T23:21:09.766Z"
+    },
+    {
+      "name": "TruthGate",
+      "result": "WARN",
+      "tech": "node",
+      "version": "v24.3.0",
+      "sources": [
+        "https://nodejs.org/docs/latest/api/",
+        "https://endoflife.date/node"
+      ],
+      "timestamp": "2026-09-14T23:21:17.585Z"
     }
   ],
-  "createdAt": "2026-09-14T21:28:23.741Z",
-  "updatedAt": "2026-09-14T21:28:23.741Z",
+  "createdAt": "2026-09-14T23:21:09.766Z",
+  "updatedAt": "2026-09-14T23:21:17.585Z",
   "history": [
     {
       "from": "idle",
       "to": "discovery",
-      "at": "2026-09-14T21:28:23.741Z"
+      "at": "2026-09-14T23:21:09.766Z"
     }
   ]
 }

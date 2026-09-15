@@ -40,3 +40,4 @@
 # Deployment
 .env.production
 config/credentials/*.key
+/storage/ssl/
