@@ -19,15 +19,21 @@ class EvidencePolicy < ApplicationPolicy
     admin?
   end
 
-  def self.scope(pundit_user, scope)
-    user = pundit_user.is_a?(Hash) ? pundit_user[:user] : pundit_user
-    return scope.where(false) unless user
+  class Scope
+    def initialize(user, scope)
+      @user = user
+      @scope = scope
+    end
 
-    org_ids = user.organizations.pluck(:id)
+    def resolve
+      return @scope.where(false) unless @user
 
-    scope.joins(:process)
-         .where(processes: { organizacao_id: org_ids })
-         .or(scope.where(collector_id: user.id))
-         .distinct
+      org_ids = @user.organizations.pluck(:id)
+
+      @scope.joins(:process)
+            .where(processes: { organizacao_id: org_ids })
+            .or(@scope.where(collector_id: @user.id))
+            .distinct
+    end
   end
 end

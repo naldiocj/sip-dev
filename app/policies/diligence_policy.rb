@@ -23,10 +23,18 @@ class DiligencePolicy < ApplicationPolicy
     account_has_capability?("DILIGENCIA_COMPLETE") && record.process.in_user_scope?(user_model)
   end
 
-  def self.scope(_user, scope)
-    scope.joins(:process)
-         .joins(processes_table: :organizacao)
-         .where(organizations: { id: user_model&.organizations&.pluck(:id) || [] })
-         .distinct
+  class Scope
+    def initialize(user, scope)
+      @user = user
+      @scope = scope
+    end
+
+    def resolve
+      org_ids = @user&.organizations&.pluck(:id) || []
+      @scope.joins(:process)
+            .joins(processes_table: :organizacao)
+            .where(organizations: { id: org_ids })
+            .distinct
+    end
   end
 end

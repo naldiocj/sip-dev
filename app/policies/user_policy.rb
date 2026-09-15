@@ -27,16 +27,20 @@ class UserPolicy < ApplicationPolicy
     admin?
   end
 
-  def self.scope(pundit_user, scope)
-    user = pundit_user.is_a?(Hash) ? pundit_user[:user] : pundit_user
-    return scope if admin_for?(pundit_user)
+  class Scope
+    def initialize(user, scope)
+      @user = user
+      @scope = scope
+    end
 
-    # Non-admin users can only see their own record
-    scope.where(id: user&.id)
-  end
+    def resolve
+      return @scope if admin?
 
-  def self.admin_for?(pundit_user)
-    user = pundit_user.is_a?(Hash) ? pundit_user[:user] : pundit_user
-    user&.has_profile?("ADMIN") == true
+      @scope.where(id: @user&.id)
+    end
+
+    def admin?
+      @user&.has_profile?("ADMIN") == true
+    end
   end
 end

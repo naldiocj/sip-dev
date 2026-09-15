@@ -23,14 +23,20 @@ class DocumentPolicy < ApplicationPolicy
     can_sign?
   end
 
-  def self.scope(pundit_user, scope)
-    user = pundit_user.is_a?(Hash) ? pundit_user[:user] : pundit_user
-    return scope.none unless user.present?
+  class Scope
+    def initialize(user, scope)
+      @user = user
+      @scope = scope
+    end
 
-    org_ids = user.organizations.pluck(:id)
-    scope.joins(:process)
-         .where(processes: { organizacao_id: org_ids })
-         .or(scope.joins(:process).where(processes: { responsavel_id: user.id }))
-         .or(scope.joins(:process).where(processes: { criador_id: user.id }))
+    def resolve
+      return @scope.none unless @user.present?
+
+      org_ids = @user.organizations.pluck(:id)
+      @scope.joins(:process)
+            .where(processes: { organizacao_id: org_ids })
+            .or(@scope.joins(:process).where(processes: { responsavel_id: @user.id }))
+            .or(@scope.joins(:process).where(processes: { criador_id: @user.id }))
+    end
   end
 end

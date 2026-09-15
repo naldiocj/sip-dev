@@ -19,7 +19,13 @@ class OrganizationPolicy < ApplicationPolicy
     can_manage_organization?
   end
 
-  def self.scope(_user, scope)
-    scope.order(:level, :code)
+  class Scope
+    def initialize(_user, scope)
+      @scope = scope
+    end
+
+    def resolve
+      @scope.order(:level, :code)
+    end
   end
 end
