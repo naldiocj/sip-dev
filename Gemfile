@@ -27,7 +27,7 @@ gem "docx", "~> 0.13"
 gem "nokogiri", "~> 1.16"
 gem "caxlsx", "~> 4.0"
 gem "caxlsx_rails", "~> 0.7"
-gem "roo", "~> 2.10"
+gem "roo", "~> 3.0"
 
 group :development, :test do
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
