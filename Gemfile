@@ -42,7 +42,7 @@ end
 
 group :development do
   gem "web-console"
-  gem "listen", "~> 3.8"
+  gem "listen", "~> 3.10"
   gem "foreman"
 end
 
