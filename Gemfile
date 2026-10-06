@@ -2,7 +2,7 @@ source "https://rubygems.org"
 
 gem "rails", "~> 8.0.5", ">= 8.0.5.1"
 gem "propshaft"
-gem "pg", "~> 1.1"
+gem "pg", "~> 1.7"
 gem "puma", ">= 5.0"
 gem "jbuilder"
 gem "tzinfo-data", platforms: %i[ windows jruby ]
